@@ -9,6 +9,8 @@ import { DataService } from '..';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { BACKEND } from '../../../../lib/utils';
+import { useSetAtom } from 'jotai';
+import { alertShow } from '../../../../store/Atom';
 
 export const ServiceTable = ({ fetchService, services }: { fetchService: any; services: DataService[] }) => {
     const router = useRouter();
@@ -16,6 +18,7 @@ export const ServiceTable = ({ fetchService, services }: { fetchService: any; se
     const [limit, setLimit] = useState<number>(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState('');
+    const setAlert = useSetAtom(alertShow);
     const [loadingFav, setLoadingFav] = useState<{
         status: boolean;
         barcode: string | undefined;
@@ -109,14 +112,18 @@ export const ServiceTable = ({ fetchService, services }: { fetchService: any; se
 
             const result = await response.json();
             if (result.error === true) {
-                console.error(result.message);
+                setAlert({ type: 'error', message: result.message });
             } else {
                 fetchService();
+                setAlert({ type: 'success', message: result.message });
             }
         } catch (error) {
             console.log('ERROR');
         } finally {
             setLoadingDelete({ barcode: '', status: false });
+            if (services.length === 0) {
+                router.push('/services');
+            }
         }
     };
 
