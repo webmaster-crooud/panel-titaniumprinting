@@ -85,6 +85,7 @@ export const NavbarMenu = () => {
 								<Link
 									key={index}
 									href={`${subMenu.url}`}
+									onClick={() => setDropdown(undefined)}
 									className="w-full h-full hover:bg-slate-200 px-5 py-3 border-b border-slate-300"
 								>
 									{subMenu.name}
