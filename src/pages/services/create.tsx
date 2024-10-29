@@ -1,21 +1,41 @@
 import { NavigationCard } from '@/components/Card/Navigation.card';
 import { navCard } from '.';
 import { Card } from '@/components/Card';
-import Select from 'react-select/base';
-import React, { useCallback, useEffect, useId, useState } from 'react';
+import Select, { MultiValue } from 'react-select';
+import React, { useEffect, useId, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import { IconLoader3 } from '@tabler/icons-react';
 import { BACKEND } from '../../../lib/utils';
-interface SelectedCategory {
-    categoryId: number;
-    name?: string;
+import dynamic from 'next/dynamic';
+import { DataCategories } from '../categories';
+import { useSetAtom } from 'jotai';
+import { alertShow } from '../../../store/Atom';
+
+interface Services {
+    name: string;
+    categoryService: any;
 }
+
+interface CategoryOption {
+    value: number;
+    label: string;
+}
+
 export default function CreateServicePage() {
     const router = useRouter();
+    const uniqueId = useId();
+    const setAlert = useSetAtom(alertShow);
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState<string>('');
-    const [categories, setCategories] = useState<SelectedCategory[]>([]);
+    const [categories, setCategories] = useState<CategoryOption[]>([]);
+    const [selectedCategories, setSelectedCategories] = useState<CategoryOption[]>([]);
+
+    // Formated Input Form to JSON stringify
+    const data: Services = {
+        name,
+        categoryService: selectedCategories.map((option) => ({ categoryId: option.value })),
+    };
 
     const submitCreate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -28,15 +48,13 @@ export default function CreateServicePage() {
                 const response = await fetch(`${BACKEND}/services`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        name,
-                        categoryService: categories,
-                    }),
+                    body: JSON.stringify(data),
                 });
                 const result = await response.json();
                 if (result.error === true) {
-                    console.log(result.message);
+                    setAlert({ type: 'error', message: result.message });
                 } else {
+                    setAlert({ type: 'success', message: result.message });
                     router.push('/services');
                 }
             } catch (error) {
@@ -47,11 +65,39 @@ export default function CreateServicePage() {
         }
     };
 
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const res = await fetch(`${BACKEND}/categories`);
+                const result = await res.json();
+                if (result.error === true) {
+                    console.log('ERROR');
+                    return;
+                } else {
+                    setCategories(
+                        result.data.map((category: DataCategories) => ({
+                            value: category.id,
+                            label: category.name,
+                        })),
+                    );
+                }
+            } catch (error) {
+                console.log('ERROR');
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
+    const handleCategoryChange = (newValue: MultiValue<CategoryOption>) => {
+        setSelectedCategories(newValue as CategoryOption[]);
+    };
+
     return (
         <>
             <NavigationCard navCard={navCard} />
             <div className="grid grid-cols-4 gap-5 items-start">
-                <Card className="col-span-2 rounded-tl-none">
+                <Card className="col-span-2 rounded-tl-none h-[50vh]">
                     <form onSubmit={submitCreate}>
                         <div className="grid grid-cols-2 gap-5 mt-5">
                             <div>
@@ -69,9 +115,22 @@ export default function CreateServicePage() {
                                 />
                             </div>
                             <div>
-                                <label htmlFor="category" className="font-semibold text-sm block mb-2">
+                                <label htmlFor={`${uniqueId}-category-input`} className="font-semibold text-sm block mb-2">
                                     Kategori
                                 </label>
+                                <div>
+                                    <Select
+                                        isMulti
+                                        id={useId()}
+                                        options={categories}
+                                        value={selectedCategories}
+                                        onChange={handleCategoryChange}
+                                        instanceId={`${uniqueId}-category`}
+                                        inputId={`${uniqueId}-category-input`}
+                                        className="react-select"
+                                        classNamePrefix="react-select"
+                                    />
+                                </div>
                             </div>
                         </div>
 
