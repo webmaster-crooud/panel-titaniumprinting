@@ -10,7 +10,7 @@ import { SuccessAlert } from '@/components/Alert/Success.alert';
 
 export const LayoutApp = ({ children }: { children: React.ReactNode }) => {
     const [alert] = useAtom(alertShow);
-    console.log(alert);
+
     return (
         <>
             <Head>
@@ -22,7 +22,7 @@ export const LayoutApp = ({ children }: { children: React.ReactNode }) => {
             <main className={`${jakartaSans.className} relative overflow-x-hidden mt-24`}>
                 {alert?.type === 'error' && <ErrorAlert />}
                 {alert?.type === 'success' && <SuccessAlert />}
-                <section className="w-11/12 mx-auto">
+                <section className="w-11/12 mx-auto min-h-screen pb-10">
                     <Breadcrumb />
                     {children}
                 </section>
