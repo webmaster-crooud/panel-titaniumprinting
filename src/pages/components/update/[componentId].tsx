@@ -5,10 +5,20 @@ import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../../store/Atom';
 import { Card } from '@/components/Card';
 import { Component } from '..';
-import { IconArrowBack, IconCirclePlus, IconLoader3 } from '@tabler/icons-react';
+import { IconArrowBack, IconCheck, IconCirclePlus, IconEye, IconEyeEdit, IconLoader3, IconTrash, IconX } from '@tabler/icons-react';
 import Link from 'next/link';
 import CurrencyInput from 'react-currency-input-field';
+import { Tooltip } from 'react-tippy';
+import { QualitiesUpdateModal } from '../Modal/QualitiesUpdate.modal';
+import { SizeUpdateModal } from '../Modal/SizeUpdate.modal';
 
+const COMPONENT_TYPES = [
+    { value: 'MATERIAL', label: 'Material' },
+    { value: 'ADDON', label: 'Addons' },
+    { value: 'PROCESSING', label: 'Processing' },
+    { value: 'CONSUMING', label: 'Consuming' },
+    { value: 'FINISHING', label: 'Finishing' },
+];
 export default function DetailComponentPage() {
     const router = useRouter();
     const { componentId } = router.query;
@@ -63,8 +73,8 @@ export default function DetailComponentPage() {
     const data = {
         name,
         typeComponent,
-        price: price ? price : 0,
-        cogs: cogs ? cogs : 0,
+        price: price ? price : undefined,
+        cogs: cogs ? cogs : undefined,
     };
     const submitUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -91,6 +101,50 @@ export default function DetailComponentPage() {
             } finally {
                 setLoading(undefined);
             }
+        }
+    };
+
+    const handlerDeleteQuality = async (qualityId: number | string, idx: number) => {
+        setLoading({ func: 'DeleteQuality', status: true, idx });
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+            const response = await fetch(`${BACKEND}/components/qualities/${componentId}/${qualityId}`, {
+                method: 'DELETE',
+            });
+            const result = await response.json();
+            if (result.error === true) {
+                setAlert({ type: 'error', message: result.message });
+                return;
+            } else {
+                setAlert({ type: 'success', message: result.message });
+                fetchComponent();
+            }
+        } catch (error) {
+            setAlert({ type: 'error', message: `${error}` });
+        } finally {
+            setLoading(undefined);
+        }
+    };
+
+    const handlerDeleteSize = async (qualityId: number | string, sizeId: number, idx: number) => {
+        setLoading({ func: 'DeleteSize', status: true, idx });
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+            const response = await fetch(`${BACKEND}/components/sizes/${qualityId}/${sizeId}`, {
+                method: 'DELETE',
+            });
+            const result = await response.json();
+            if (result.error === true) {
+                setAlert({ type: 'error', message: result.message });
+                return;
+            } else {
+                setAlert({ type: 'success', message: result.message });
+                fetchComponent();
+            }
+        } catch (error) {
+            setAlert({ type: 'error', message: `${error}` });
+        } finally {
+            setLoading(undefined);
         }
     };
 
@@ -143,26 +197,18 @@ export default function DetailComponentPage() {
                                         </label>
 
                                         <select
+                                            id="typeComponent"
                                             name="typeComponent"
                                             className="px-3 py-2 text-sm bg-transparent border-2 border-slate-500 rounded-lg w-full appearance-none text-center"
-                                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setTypeComponent(e.target.value)}
+                                            value={typeComponent}
+                                            onChange={(e) => setTypeComponent(e.target.value)}
                                         >
-                                            <option value={undefined}>--Pilih---</option>
-                                            <option value="MATERIAL" selected={typeComponent === 'MATERIAL'}>
-                                                Material
-                                            </option>
-                                            <option value="ADDON" selected={typeComponent === 'ADDON'}>
-                                                Addons
-                                            </option>
-                                            <option value="PROCESSING" selected={typeComponent === 'PROCESSING'}>
-                                                Processing
-                                            </option>
-                                            <option value="CONSUMING" selected={typeComponent === 'CONSUMING'}>
-                                                Consuming
-                                            </option>
-                                            <option value="FINISHING" selected={typeComponent === 'FINISHING'}>
-                                                Finishing
-                                            </option>
+                                            <option value="">--Pilih---</option>
+                                            {COMPONENT_TYPES.map(({ value, label }) => (
+                                                <option key={value} value={value}>
+                                                    {label}
+                                                </option>
+                                            ))}
                                         </select>
                                     </div>
 
@@ -183,7 +229,7 @@ export default function DetailComponentPage() {
                                                 decimalsLimit={0}
                                                 defaultValue={price}
                                                 autoComplete="off"
-                                                onValueChange={(value, name, values) => setPrice(values ? values.float : 0)}
+                                                onValueChange={(value, name, values) => setPrice(values ? values.float : undefined)}
                                             />
                                         </div>
                                     )}
@@ -239,6 +285,122 @@ export default function DetailComponentPage() {
                             </div>
                         </Link>
                     </div>
+
+                    {component?.qualities && (
+                        <>
+                            <h2 className="text-lg font-semibold mt-8">Data Kualitas dan Ukuran</h2>
+                            <div className="grid grid-cols-3 gap-5 mt-5">
+                                {component?.qualities.map((quality, index) => (
+                                    <Card key={index} className="rounded-lg">
+                                        <div className="flex items-center justify-end gap-2">
+                                            <QualitiesUpdateModal data={quality} componentId={`${componentId}`} fetchComponents={fetchComponent} />
+                                            <Tooltip title="Hapus" size="small" position="left">
+                                                <button
+                                                    disabled={loading?.func === 'DeleteQuality'}
+                                                    onClick={() => handlerDeleteQuality(quality.id, index)}
+                                                >
+                                                    {loading?.func === 'DeleteQuality' && loading.idx === index ? (
+                                                        <IconLoader3 size={18} stroke={2} className="text-slate-800 animate-spin" />
+                                                    ) : (
+                                                        <IconTrash size={18} stroke={2} className="text-red-500" />
+                                                    )}
+                                                </button>
+                                            </Tooltip>
+                                        </div>
+                                        <table className="w-full table-auto">
+                                            <thead className="bg-slate-600 text-slate-100">
+                                                <tr className="text-sm">
+                                                    <th className="text-start py-1 px-3">Data</th>
+                                                    <th className="text-start py-1 px-3">Keterangan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="text-sm">
+                                                <tr className="border-b border-slate-400">
+                                                    <td className="py-1 px-3">Kualitas</td>
+                                                    <td className="py-1 px-3">{quality.name}</td>
+                                                </tr>
+                                                <tr className="border-b border-slate-400">
+                                                    <td className="py-1 px-3">Orientasi</td>
+                                                    <td className="py-1 px-3">
+                                                        {quality.orientation ? (
+                                                            <IconCheck className="text-teal-500" />
+                                                        ) : (
+                                                            <IconX className="text-red-500 />" />
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                                <tr className="border-b border-slate-400">
+                                                    <td className="py-1 px-3">Ukuran</td>
+                                                    <td className="py-1 px-3">
+                                                        {quality.sizes.map((size, index) => (
+                                                            <div className="w-full" key={index}>
+                                                                <ul className="mb-3">
+                                                                    <li className="flex items-center justify-between py-1 border-b border-slate-400">
+                                                                        <b>Data</b>
+                                                                        <span>
+                                                                            <div className="flex items-center justify-end gap-2">
+                                                                                <SizeUpdateModal
+                                                                                    data={size}
+                                                                                    qualityId={quality.id}
+                                                                                    fetchComponents={fetchComponent}
+                                                                                />
+                                                                                <Tooltip title="Hapus" size="small" position="left">
+                                                                                    <button
+                                                                                        disabled={
+                                                                                            loading?.func === 'DeleteSize' && loading.idx === index
+                                                                                        }
+                                                                                        onClick={() => handlerDeleteSize(quality.id, size.id, index)}
+                                                                                    >
+                                                                                        {loading?.func === 'DeleteSize' && loading.idx === index ? (
+                                                                                            <IconLoader3
+                                                                                                size={16}
+                                                                                                stroke={2}
+                                                                                                className="text-slate-800 animate-spin"
+                                                                                            />
+                                                                                        ) : (
+                                                                                            <IconTrash
+                                                                                                size={16}
+                                                                                                stroke={2}
+                                                                                                className="text-red-500"
+                                                                                            />
+                                                                                        )}
+                                                                                    </button>
+                                                                                </Tooltip>
+                                                                            </div>
+                                                                        </span>
+                                                                    </li>
+                                                                    <li className="flex items-center justify-between py-1 border-b border-slate-400">
+                                                                        <b>Panjang</b>
+                                                                        <span>{size.length}</span>
+                                                                    </li>
+                                                                    <li className="flex items-center justify-between py-1 border-b border-slate-400">
+                                                                        <b>Lebar</b>
+                                                                        <span>{size.width}</span>
+                                                                    </li>
+                                                                    <li className="flex items-center justify-between py-1 border-b border-slate-400">
+                                                                        <b>Tinggi</b>
+                                                                        <span>{size.height}</span>
+                                                                    </li>
+                                                                    <li className="flex items-center justify-between py-1 border-b border-slate-400">
+                                                                        <b>Harga Jual</b>
+                                                                        <span>{size.price}</span>
+                                                                    </li>
+                                                                    <li className="flex items-center justify-between py-1 border-b border-slate-400">
+                                                                        <b>Harga Modal</b>
+                                                                        <span>{size.cogs}</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        ))}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </Card>
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </>
             )}
         </>

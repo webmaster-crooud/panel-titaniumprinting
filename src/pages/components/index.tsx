@@ -23,6 +23,20 @@ export interface Component {
     typeComponent: string | undefined;
     createdAt: Date | undefined;
     updatedAt: Date | undefined;
+    qualities: {
+        id: number | string;
+        name: string;
+        orientation: boolean;
+        sizes: {
+            id: number;
+            width: number;
+            height: number;
+            length: number;
+            weight: number;
+            price: number;
+            cogs: number;
+        }[];
+    }[];
 }
 
 type propsLoading = {
