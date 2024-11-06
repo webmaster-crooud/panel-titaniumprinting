@@ -15,5 +15,5 @@ export const formatCurrency = new Intl.NumberFormat('id-ID', {
 
 export const formatDateTIme = (dateTime: Date) => {
     const result = moment.parseZone(dateTime);
-    return moment(result).utcOffset('Asia/Jakarta').format('YYYY-MM-DD HH:mm:ss');
+    return moment(result).utcOffset('Asia/Jakarta').format('DD, MMMM YYYY - HH:mm');
 };

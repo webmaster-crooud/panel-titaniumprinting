@@ -30,7 +30,6 @@ const navMenu: PropsNavbarMenu[] = [
             { name: 'Kategori', url: '/categories' },
             { name: 'Produk', url: '/products' },
             { name: 'Komponen', url: '/components' },
-            { name: 'Kualitas', url: '/qualities' },
         ],
     },
     {
