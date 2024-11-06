@@ -3,7 +3,7 @@ import { IconActivity, IconEye, IconEyeEdit, IconLoader3, IconSearch, IconStar, 
 import React, { useEffect, useState } from 'react';
 import 'react-tippy/dist/tippy.css';
 import { Tooltip } from 'react-tippy';
-import { Pagination } from './Pagination';
+import { Pagination } from '../../../components/Pagination';
 import { DataService } from '..';
 
 import { useRouter } from 'next/router';
