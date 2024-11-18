@@ -17,7 +17,7 @@ export const ErrorAlert = () => {
 
     return (
         <div
-            className={`absolute right-5 w-full ${
+            className={`absolute z-30 right-5 w-full ${
                 alert?.type === 'error' ? '-translate-y-0 opacity-100 duration-300 ease-in-out' : '-translate-y-10 opacity-0 duration-300 ease-in-out'
             }`}
         >

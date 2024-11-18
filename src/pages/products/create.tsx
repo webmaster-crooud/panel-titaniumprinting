@@ -311,7 +311,6 @@ export default function CreateProductPage() {
 
             setLoading(true);
             try {
-                console.log(formData);
                 await new Promise((resolve) => setTimeout(resolve, 2000));
                 const response = await fetch(`${BACKEND}/products`, {
                     method: 'POST',
@@ -334,9 +333,6 @@ export default function CreateProductPage() {
             }
         }
     };
-
-    console.log(dataProduct);
-    console.log(fileImages);
     return (
         <>
             <NavigationCard navCard={navCard} />

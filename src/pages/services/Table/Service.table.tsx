@@ -1,5 +1,5 @@
 // components/CategoriesTable.tsx
-import { IconActivity, IconEye, IconEyeEdit, IconLoader3, IconSearch, IconStar, IconStarFilled, IconTrash, IconX } from '@tabler/icons-react';
+import { IconActivity, IconEye, IconTransform, IconLoader3, IconSearch, IconStar, IconStarFilled, IconTrash, IconX } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import 'react-tippy/dist/tippy.css';
 import { Tooltip } from 'react-tippy';
@@ -12,7 +12,7 @@ import { BACKEND } from '../../../../lib/utils';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../../store/Atom';
 
-export const ServiceTable = ({ fetchService, services }: { fetchService: any; services: DataService[] }) => {
+const ServiceTable = ({ fetchService, services }: { fetchService: any; services: DataService[] }) => {
     const router = useRouter();
     const { pathname } = router;
     const [limit, setLimit] = useState<number>(5);
@@ -36,11 +36,11 @@ export const ServiceTable = ({ fetchService, services }: { fetchService: any; se
     });
 
     // Fungsi untuk mencari data
-    const filteredServices = services.filter((service) => service.name.toLowerCase().includes(search.toLowerCase()));
+    const filteredServices = services?.filter((service) => service?.name.toLowerCase().includes(search?.toLowerCase()));
     // Logika pagination
     const indexOfLastData = currentPage * limit;
     const indexOfFirstData = indexOfLastData - limit;
-    const currentData = filteredServices.slice(indexOfFirstData, indexOfLastData);
+    const currentData = filteredServices?.slice(indexOfFirstData, indexOfLastData);
     // Handler untuk perubahan halaman
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -121,7 +121,7 @@ export const ServiceTable = ({ fetchService, services }: { fetchService: any; se
             console.log('ERROR');
         } finally {
             setLoadingDelete({ barcode: '', status: false });
-            if (services.length === 0) {
+            if (services?.length === 0) {
                 router.push('/services');
             }
         }
@@ -173,7 +173,7 @@ export const ServiceTable = ({ fetchService, services }: { fetchService: any; se
                     </tr>
                 </thead>
                 <tbody>
-                    {currentData.map((service, index) => (
+                    {currentData?.map((service, index) => (
                         <tr key={index} className="border-b border-slate-300">
                             <td className="py-3 text-center">
                                 <span>{index + 1}</span>
@@ -249,7 +249,7 @@ export const ServiceTable = ({ fetchService, services }: { fetchService: any; se
                                     ) : (
                                         <Tooltip title="Perbarui" position="top" trigger="mouseenter" arrow size="small">
                                             <Link href={`/services/update/${service.barcode}`} type="button">
-                                                <IconEyeEdit size={18} stroke={2} className="text-cyan-600" />
+                                                <IconTransform size={18} stroke={2} className="text-cyan-600" />
                                             </Link>
                                         </Tooltip>
                                     )}
@@ -261,9 +261,11 @@ export const ServiceTable = ({ fetchService, services }: { fetchService: any; se
             </table>
 
             {/* Tampilkan pagination hanya jika ada data dan tidak sedang loading */}
-            {currentData.length > 0 && (
-                <Pagination currentPage={currentPage} totalItems={filteredServices.length} itemsPerPage={limit} onPageChange={handlePageChange} />
+            {currentData?.length > 0 && (
+                <Pagination currentPage={currentPage} totalItems={filteredServices?.length} itemsPerPage={limit} onPageChange={handlePageChange} />
             )}
         </>
     );
 };
+
+export default ServiceTable;

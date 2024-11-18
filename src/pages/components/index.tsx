@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
-import { ComponentsTable } from './Table/Components.table';
+import ComponentsTable from './Table/Components.table';
 import { NavigationCard } from '@/components/Card/Navigation.card';
 
 enum TYPECOMPONENT {
@@ -72,7 +72,6 @@ export default function ComponentsPage() {
                 if (result.error === true) {
                     setAlert({ type: 'error', message: result.message });
                 }
-                console.log(result.data);
                 setComponents(result.data);
             } catch (error) {
                 setAlert({ type: 'error', message: `${error}` });
