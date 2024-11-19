@@ -1,11 +1,11 @@
 import { Card } from '@/components/Card';
 import Image from 'next/image';
-import { DetailProducts } from '../[barcode]';
+import { DetailProducts } from '../../pages/products/[barcode]';
 import React, { useRef, useState } from 'react';
-import { BACKEND, PUBLIC } from '../../../../lib/utils';
+import { BACKEND, PUBLIC } from '../../../lib/utils';
 import { IconLoader3, IconPlus, IconTransform, IconUpload, IconX } from '@tabler/icons-react';
 import { useSetAtom } from 'jotai';
-import { alertShow } from '../../../../store/Atom';
+import { alertShow } from '../../../store/Atom';
 
 type propsCoverImageProduct = {
     product?: DetailProducts;

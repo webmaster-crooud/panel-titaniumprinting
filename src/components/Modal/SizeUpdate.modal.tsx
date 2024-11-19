@@ -2,9 +2,9 @@ import { IconTransform, IconLoader3, IconX } from '@tabler/icons-react';
 import { Tooltip } from 'react-tippy';
 import { Card } from '@/components/Card';
 import React, { useState } from 'react';
-import { BACKEND } from '../../../../lib/utils';
+import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
-import { alertShow } from '../../../../store/Atom';
+import { alertShow } from '../../../store/Atom';
 
 interface Sizes {
     id: number;

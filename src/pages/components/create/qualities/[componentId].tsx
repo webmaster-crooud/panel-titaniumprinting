@@ -103,7 +103,7 @@ export default function CreateQualityPage() {
     };
 
     return (
-        <>
+        <section className="relative py-8">
             <div className="flex items-center justify-between">
                 <h1 className="text-xl font-bold text-slate-800">Komponen &quot;{nameComponent}&quot;</h1>
                 <Link href={'/components'} className="px-3 py-2 text-sm font-semibold bg-red-600 text-slate-100 rounded-lg">
@@ -122,7 +122,7 @@ export default function CreateQualityPage() {
                         <div className="relative w-full">
                             <label
                                 htmlFor="NameComponent"
-                                className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-slate-200 left-5 ${
+                                className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-blue-100 left-5 ${
                                     errorValidation?.type === 'name' ? 'text-red-500' : 'text-slate-700'
                                 }`}
                             >
@@ -144,7 +144,7 @@ export default function CreateQualityPage() {
                             />
                         </div>
                         <div className="relative w-full">
-                            <label htmlFor="NameComponent" className={`text-sm uppercase font-semibold block bg-slate-200 text-slate-700`}>
+                            <label htmlFor="NameComponent" className={`text-sm uppercase font-semibold block bg-blue-100 text-slate-700`}>
                                 Orientasi?
                             </label>
                             <div className="flex items-center justify-start gap-5">
@@ -152,7 +152,6 @@ export default function CreateQualityPage() {
                                     <input
                                         id="checked-checkbox"
                                         type="radio"
-                                        value={orientationChecked}
                                         checked={orientationChecked === true}
                                         onChange={() => setOrientationChecked(true)}
                                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded outline-none ring-0"
@@ -166,7 +165,6 @@ export default function CreateQualityPage() {
                                         id="default-checkbox"
                                         type="radio"
                                         checked={orientationChecked === false}
-                                        value={!orientationChecked}
                                         onChange={() => setOrientationChecked(false)}
                                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded outline-none ring-0"
                                     />
@@ -206,7 +204,7 @@ export default function CreateQualityPage() {
                                     <div className="relative w-full">
                                         <label
                                             htmlFor="width"
-                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-slate-200 left-5 text-slate-700`}
+                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-blue-100 left-5 text-slate-700`}
                                         >
                                             Lebar (Centimeter)
                                         </label>
@@ -223,7 +221,7 @@ export default function CreateQualityPage() {
                                     <div className="relative w-full">
                                         <label
                                             htmlFor="height"
-                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-slate-200 left-5 text-slate-700`}
+                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-blue-100 left-5 text-slate-700`}
                                         >
                                             Tinggi (Centimeter)
                                         </label>
@@ -240,7 +238,7 @@ export default function CreateQualityPage() {
                                     <div className="relative w-full">
                                         <label
                                             htmlFor="length"
-                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-slate-200 left-5 text-slate-700`}
+                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-blue-100 left-5 text-slate-700`}
                                         >
                                             Panjang (Centimeter)
                                         </label>
@@ -257,7 +255,7 @@ export default function CreateQualityPage() {
                                     <div className="relative w-full">
                                         <label
                                             htmlFor="weight"
-                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-slate-200 left-5 text-slate-700`}
+                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-blue-100 left-5 text-slate-700`}
                                         >
                                             Berat (Kilogram)
                                         </label>
@@ -274,7 +272,7 @@ export default function CreateQualityPage() {
                                     <div className="relative w-full">
                                         <label
                                             htmlFor="price"
-                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-slate-200 left-5 text-slate-700`}
+                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-blue-100 left-5 text-slate-700`}
                                         >
                                             Harga Jual
                                         </label>
@@ -291,7 +289,7 @@ export default function CreateQualityPage() {
                                     <div className="relative w-full">
                                         <label
                                             htmlFor="cogs"
-                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-slate-200 left-5 text-slate-700`}
+                                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-blue-100 left-5 text-slate-700`}
                                         >
                                             Harga Modal
                                         </label>
@@ -320,6 +318,6 @@ export default function CreateQualityPage() {
                     ))}
                 </div>
             </form>
-        </>
+        </section>
     );
 }

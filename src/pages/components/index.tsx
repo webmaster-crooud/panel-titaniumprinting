@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
-import ComponentsTable from './Table/Components.table';
+import ComponentsTable from '../../components/Table/Components.table';
 import { NavigationCard } from '@/components/Card/Navigation.card';
 
 enum TYPECOMPONENT {
@@ -88,7 +88,7 @@ export default function ComponentsPage() {
 
     return (
         <>
-            <div className="flex items-center justify-between mt-3 mb-5">
+            <div className="flex items-center justify-between mt-8 mb-5">
                 <h1 className="font-semibold text-xl text-slate-700">Data Komponen</h1>
                 <Link
                     href={'/components/create'}

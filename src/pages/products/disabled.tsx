@@ -61,7 +61,7 @@ export default function DisabledProductsListPage() {
     };
 
     return (
-        <>
+        <section className="py-8 relative">
             <NavigationCard navCard={navCard} />
             <Card className="w-10/12 rounded-tl-none">
                 <div className="flex items-center justify-between mb-5">
@@ -97,6 +97,6 @@ export default function DisabledProductsListPage() {
                     <Pagination currentPage={currentPage} totalItems={filteredProducts.length} itemsPerPage={limit} onPageChange={handlePageChange} />
                 )}
             </Card>
-        </>
+        </section>
     );
 }

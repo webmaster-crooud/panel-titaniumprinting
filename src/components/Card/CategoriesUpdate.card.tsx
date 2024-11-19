@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSetAtom } from 'jotai';
-import { alertShow } from '../../../../store/Atom';
-import { BACKEND } from '../../../../lib/utils';
+import { alertShow } from '../../../store/Atom';
+import { BACKEND } from '../../../lib/utils';
 import { IconLoader3 } from '@tabler/icons-react';
 
 type propsFormUpdateCategories = {

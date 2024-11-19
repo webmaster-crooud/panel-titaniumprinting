@@ -334,7 +334,7 @@ export default function CreateProductPage() {
         }
     };
     return (
-        <>
+        <section className="relative py-8">
             <NavigationCard navCard={navCard} />
             <form onSubmit={submitCreateProduct} className="grid grid-cols-3 gap-5 items-start">
                 <Card className="col-span-2 rounded-tl-none">
@@ -668,6 +668,6 @@ export default function CreateProductPage() {
                     ))}
                 </div>
             </form>
-        </>
+        </section>
     );
 }
