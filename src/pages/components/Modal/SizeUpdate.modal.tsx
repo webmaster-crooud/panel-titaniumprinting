@@ -1,5 +1,5 @@
-import { IconEyeEdit, IconLoader3, IconX } from '@tabler/icons-react';
-import { Size, Tooltip } from 'react-tippy';
+import { IconTransform, IconLoader3, IconX } from '@tabler/icons-react';
+import { Tooltip } from 'react-tippy';
 import { Card } from '@/components/Card';
 import React, { useState } from 'react';
 import { BACKEND } from '../../../../lib/utils';
@@ -22,16 +22,16 @@ type propsQualitiesUpdateModal = {
     fetchComponents: () => Promise<void>;
 };
 
-export const SizeUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data, qualityId, fetchComponents }) => {
+const SizeUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data, qualityId, fetchComponents }) => {
     const [modal, setModal] = useState<{ func: string; id: number | string } | undefined>(undefined);
     const [loading, setLoading] = useState(false);
     const setAlert = useSetAtom(alertShow);
-    const [width, setWidth] = useState(data.width);
-    const [length, setLength] = useState(data.length);
-    const [height, setHeight] = useState<number>(data.height);
-    const [weight, setWeight] = useState(data.weight);
-    const [price, setPrice] = useState(data.price);
-    const [cogs, setCogs] = useState(data.cogs);
+    const [width, setWidth] = useState(data ? data.width : 0);
+    const [length, setLength] = useState(data?.length);
+    const [height, setHeight] = useState<number>(data?.height);
+    const [weight, setWeight] = useState(data?.weight);
+    const [price, setPrice] = useState(data?.price);
+    const [cogs, setCogs] = useState(data?.cogs);
 
     const submitUpdateQualities = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -64,7 +64,7 @@ export const SizeUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data, qua
         <>
             <Tooltip title="Pengaturan" size="small" position="left">
                 <button onClick={() => setModal({ func: 'sizesUpdate', id: data.id })}>
-                    <IconEyeEdit size={16} stroke={2} className="text-sky-500" />
+                    <IconTransform size={16} stroke={2} className="text-sky-500" />
                 </button>
             </Tooltip>
 
@@ -97,7 +97,7 @@ export const SizeUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data, qua
                                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                                 setWidth(Number(e.target.value));
                                             }}
-                                            value={width}
+                                            value={width ? width : 0}
                                             autoComplete="off"
                                         />
                                     </div>
@@ -214,3 +214,5 @@ export const SizeUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data, qua
         </>
     );
 };
+
+export default SizeUpdateModal;

@@ -1,4 +1,4 @@
-import { IconEyeEdit, IconLoader3, IconX } from '@tabler/icons-react';
+import { IconTransform, IconLoader3, IconX } from '@tabler/icons-react';
 import { Tooltip } from 'react-tippy';
 import { Card } from '@/components/Card';
 import React, { useState } from 'react';
@@ -18,10 +18,10 @@ type propsQualitiesUpdateModal = {
     fetchComponents: () => Promise<void>;
 };
 
-export const QualitiesUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data, componentId, fetchComponents }) => {
+const QualitiesUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data, componentId, fetchComponents }) => {
     const [modal, setModal] = useState<{ func: string; id: number | string } | undefined>(undefined);
-    const [name, setName] = useState<string>(data.name);
-    const [orientation, setOrientation] = useState(data.orientation);
+    const [name, setName] = useState<string>(data?.name);
+    const [orientation, setOrientation] = useState(data?.orientation);
     const [loading, setLoading] = useState(false);
     const setAlert = useSetAtom(alertShow);
 
@@ -56,7 +56,7 @@ export const QualitiesUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data
         <>
             <Tooltip title="Pengaturan" size="small" position="left">
                 <button onClick={() => setModal({ func: 'qualities', id: data.id })}>
-                    <IconEyeEdit size={16} stroke={2} className="text-sky-500" />
+                    <IconTransform size={16} stroke={2} className="text-sky-500" />
                 </button>
             </Tooltip>
 
@@ -148,3 +148,5 @@ export const QualitiesUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data
         </>
     );
 };
+
+export default QualitiesUpdateModal;

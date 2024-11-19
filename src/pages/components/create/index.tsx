@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import { BACKEND, formatCurrency } from '../../../../lib/utils';
-import { ComponentsModal } from '../Modal/Components.modal';
+import ComponentsModal from '../Modal/Components.modal';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../../store/Atom';
 import { useRouter } from 'next/router';
@@ -85,7 +85,6 @@ export default function CreateComponentPage() {
         }
     };
 
-    console.log(errorValidation);
     return (
         <form className="w-full grid grid-cols-2 gap-5" onSubmit={sumbitCreate}>
             <Card className="full">

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DataCategories } from '..';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../../store/Atom';
 import { BACKEND } from '../../../../lib/utils';
@@ -10,7 +9,7 @@ type propsFormUpdateCategories = {
     name: string | undefined;
     fetchCategories: () => Promise<void>;
 };
-export const FormUpdateCategories: React.FC<propsFormUpdateCategories> = ({ id, name, fetchCategories }) => {
+const FormUpdateCategories: React.FC<propsFormUpdateCategories> = ({ id, name, fetchCategories }) => {
     const [loading, setLoading] = useState(false);
     const [errorValidation, setErrorValidation] = useState<{ name: string; message: string } | undefined>(undefined);
     const [nameUpdate, setNameUpdate] = useState<string | undefined>(name);
@@ -88,3 +87,5 @@ export const FormUpdateCategories: React.FC<propsFormUpdateCategories> = ({ id, 
         </>
     );
 };
+
+export default FormUpdateCategories;

@@ -5,12 +5,12 @@ import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../../store/Atom';
 import { Card } from '@/components/Card';
 import { Component } from '..';
-import { IconArrowBack, IconCheck, IconCirclePlus, IconEye, IconEyeEdit, IconLoader3, IconTrash, IconX } from '@tabler/icons-react';
+import { IconArrowBack, IconCheck, IconCirclePlus, IconEye, IconTransform, IconLoader3, IconTrash, IconX } from '@tabler/icons-react';
 import Link from 'next/link';
 import CurrencyInput from 'react-currency-input-field';
 import { Tooltip } from 'react-tippy';
-import { QualitiesUpdateModal } from '../Modal/QualitiesUpdate.modal';
-import { SizeUpdateModal } from '../Modal/SizeUpdate.modal';
+import QualitiesUpdateModal from '../Modal/QualitiesUpdate.modal';
+import SizeUpdateModal from '../Modal/SizeUpdate.modal';
 
 const COMPONENT_TYPES = [
     { value: 'MATERIAL', label: 'Material' },
@@ -175,7 +175,7 @@ export default function DetailComponentPage() {
                                             htmlFor="componentName"
                                             className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-slate-200 left-5"
                                         >
-                                            Nama Kategori
+                                            Nama Komponen
                                         </label>
 
                                         <input
