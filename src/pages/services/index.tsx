@@ -1,6 +1,6 @@
 import { Card } from '@/components/Card';
 import { NavigationCard } from '@/components/Card/Navigation.card';
-import { ServiceTable } from './Table/Service.table';
+import ServiceTable from './Table/Service.table';
 import { useCallback, useEffect, useState } from 'react';
 import { BACKEND } from '../../../lib/utils';
 

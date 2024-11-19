@@ -1,7 +1,6 @@
 import {
-    IconActivityHeartbeat,
     IconCloudUpload,
-    IconEyeEdit,
+    IconTransform,
     IconEyeOff,
     IconLoader3,
     IconNumber123,
@@ -18,7 +17,7 @@ import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../../store/Atom';
 import { BACKEND } from '../../../../lib/utils';
 
-export const CategoriesTable = ({
+const CategoriesTable = ({
     categories,
     fetchCategories,
     handlerUpdate,
@@ -38,7 +37,7 @@ export const CategoriesTable = ({
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
     };
-    categories = categories.filter((category) => category.name.toLocaleLowerCase().includes(search.toLowerCase()));
+    categories = categories?.filter((category) => category?.name.toLocaleLowerCase().includes(search?.toLowerCase()));
 
     const handleDeletedCategory = async (id: number) => {
         setLoadingDeleted({ status: true, id });
@@ -48,7 +47,6 @@ export const CategoriesTable = ({
                 method: 'DELETE',
             });
             const result = await response.json();
-            console.log(result);
             if (result.error === true) {
                 setAlert({ type: 'error', message: result.message });
                 return;
@@ -70,7 +68,6 @@ export const CategoriesTable = ({
                 method: 'PATCH',
             });
             const result = await response.json();
-            console.log(result);
             if (result.error === true) {
                 setAlert({ type: 'error', message: result.message });
                 return;
@@ -117,7 +114,7 @@ export const CategoriesTable = ({
                     </tr>
                 </thead>
                 <tbody>
-                    {categories.map((category, index) => (
+                    {categories?.map((category, index) => (
                         <tr className="border-b border-slate-400 text-slate-600" key={index}>
                             <td className="text-center">{index + 1}</td>
                             <td className="py-2 font-medium text-start">{category.name}</td>
@@ -131,7 +128,7 @@ export const CategoriesTable = ({
                                                 </button>
                                             ) : (
                                                 <button type="button" onClick={() => handlerUpdate(category.id, category.name)}>
-                                                    <IconEyeEdit size={20} stroke={2} className="text-blue-600" />
+                                                    <IconTransform size={20} stroke={2} className="text-blue-600" />
                                                 </button>
                                             )}
                                         </Tooltip>
@@ -175,3 +172,4 @@ export const CategoriesTable = ({
         </>
     );
 };
+export default CategoriesTable;

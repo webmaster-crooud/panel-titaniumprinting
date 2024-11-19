@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Component } from '..';
 import { Card } from '@/components/Card';
-import { IconCloudUpload, IconEyeEdit, IconLoader3, IconSettings, IconTrash } from '@tabler/icons-react';
+import { IconCloudUpload, IconTransform, IconLoader3, IconSettings, IconTrash } from '@tabler/icons-react';
 import { Tooltip } from 'react-tippy';
 import { useRouter } from 'next/router';
 import { BACKEND } from '../../../../lib/utils';
@@ -14,7 +14,7 @@ type propsComponentsTable = {
     fetchComponents: () => Promise<Component | void>;
 };
 
-export const ComponentsTable: React.FC<propsComponentsTable> = ({ components, type, fetchComponents }) => {
+const ComponentsTable: React.FC<propsComponentsTable> = ({ components, type, fetchComponents }) => {
     const router = useRouter();
     const [loading, setLoading] = useState<{ func: string; status: boolean; id?: string | number | undefined } | undefined>(undefined);
     const setAlert = useSetAtom(alertShow);
@@ -102,7 +102,7 @@ export const ComponentsTable: React.FC<propsComponentsTable> = ({ components, ty
                                                     <>
                                                         <Tooltip title="Pengaturan" size="small" arrow position="left">
                                                             <button onClick={() => router.push(`/components/update/${data.id}`)}>
-                                                                <IconEyeEdit size={18} stroke={2} className="text-sky-600" />
+                                                                <IconTransform size={18} stroke={2} className="text-sky-600" />
                                                             </button>
                                                         </Tooltip>
 
@@ -125,7 +125,7 @@ export const ComponentsTable: React.FC<propsComponentsTable> = ({ components, ty
                                                     <>
                                                         <Tooltip title="Pengaturan" size="small" arrow position="left">
                                                             <button onClick={() => router.push(`/components/update/${data.id}`)}>
-                                                                <IconEyeEdit size={18} stroke={2} className="text-sky-600" />
+                                                                <IconTransform size={18} stroke={2} className="text-sky-600" />
                                                             </button>
                                                         </Tooltip>
 
@@ -183,3 +183,5 @@ export const ComponentsTable: React.FC<propsComponentsTable> = ({ components, ty
         </>
     );
 };
+
+export default ComponentsTable;

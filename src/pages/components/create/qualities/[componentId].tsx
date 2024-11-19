@@ -10,12 +10,12 @@ import { Card } from '@/components/Card';
 import CurrencyInput from 'react-currency-input-field';
 
 interface DataSize {
-    width: number | string;
-    height: number | string;
-    weight: number | string;
-    price: number | string;
-    cogs: number | string;
-    length: number | string;
+    width: number | string | null;
+    height: number | string | null;
+    weight: number | string | null;
+    price: number | string | null;
+    cogs: number | string | null;
+    length: number | string | null;
 }
 
 export default function CreateQualityPage() {
@@ -28,8 +28,9 @@ export default function CreateQualityPage() {
 
     const setAlert = useSetAtom(alertShow);
     const [errorValidation, setErrorValidation] = useState<{ type: string; message: string } | undefined>(undefined);
-    const [sizes, setSizes] = useState<DataSize[]>([{ width: '', cogs: '', height: '', length: '', price: '', weight: '' }]);
+    const [sizes, setSizes] = useState<DataSize[]>([{ width: 0, cogs: 0, height: 0, length: 0, price: 0, weight: 0 }]);
 
+    console.log(sizes);
     useEffect(() => {
         const getNameComponent = async () => {
             const response = await fetch(`${BACKEND}/components/${componentId}`);
@@ -46,12 +47,12 @@ export default function CreateQualityPage() {
 
     const handlerAddNewSize = () => {
         const addSize: DataSize = {
-            weight: '',
-            height: '',
-            width: '',
-            length: '',
-            cogs: '',
-            price: '',
+            weight: 0,
+            height: 0,
+            width: 0,
+            length: 0,
+            cogs: 0,
+            price: 0,
         };
         setSizes([...sizes, addSize]);
     };
@@ -68,12 +69,7 @@ export default function CreateQualityPage() {
         const data = [...sizes];
         const key = e.target.name as SizeKeys;
 
-        if (key in data[index]) {
-            data[index][key] = Number(e.target.value);
-        } else {
-            // Handle invalid property access, e.g., log an error or ignore
-            console.error(`Invalid property: ${key}`);
-        }
+        data[index][key] = Number(e.target.value);
 
         setSizes(data);
     };
@@ -220,7 +216,7 @@ export default function CreateQualityPage() {
                                             className={`px-3 py-2 text-sm bg-transparent border-2 outline-none rounded-lg w-full border-slate-500`}
                                             placeholder="Masukan lebar..."
                                             onChange={(e) => handleFormChange(e, index)}
-                                            value={size?.width}
+                                            value={size.width ? size.width : 0}
                                             autoComplete="off"
                                         />
                                     </div>
@@ -237,7 +233,7 @@ export default function CreateQualityPage() {
                                             className={`px-3 py-2 text-sm bg-transparent border-2 outline-none rounded-lg w-full border-slate-500`}
                                             placeholder="Masukan tinggi..."
                                             onChange={(e) => handleFormChange(e, index)}
-                                            value={size?.height}
+                                            value={size.height ? size.height : 0}
                                             autoComplete="off"
                                         />
                                     </div>
@@ -254,7 +250,7 @@ export default function CreateQualityPage() {
                                             className={`px-3 py-2 text-sm bg-transparent border-2 outline-none rounded-lg w-full border-slate-500`}
                                             placeholder="Masukan panjang..."
                                             onChange={(e) => handleFormChange(e, index)}
-                                            value={size?.length}
+                                            value={size.length ? size.length : 0}
                                             autoComplete="off"
                                         />
                                     </div>
@@ -271,7 +267,7 @@ export default function CreateQualityPage() {
                                             className={`px-3 py-2 text-sm bg-transparent border-2 outline-none rounded-lg w-full border-slate-500`}
                                             placeholder="Masukan berat..."
                                             onChange={(e) => handleFormChange(e, index)}
-                                            value={size?.weight}
+                                            value={size.weight ? size.weight : 0}
                                             autoComplete="off"
                                         />
                                     </div>
@@ -288,7 +284,7 @@ export default function CreateQualityPage() {
                                             className={`px-3 py-2 text-sm bg-transparent border-2 outline-none rounded-lg w-full border-slate-500`}
                                             placeholder="Masukan harga jual..."
                                             onChange={(e) => handleFormChange(e, index)}
-                                            value={size?.price}
+                                            value={size.price ? size.price : 0}
                                             autoComplete="off"
                                         />
                                     </div>
@@ -305,7 +301,7 @@ export default function CreateQualityPage() {
                                             className={`px-3 py-2 text-sm bg-transparent border-2 outline-none rounded-lg w-full border-slate-500`}
                                             placeholder="Masukan harga beli..."
                                             onChange={(e) => handleFormChange(e, index)}
-                                            value={size?.cogs}
+                                            value={size.cogs ? size.cogs : 0}
                                             autoComplete="off"
                                         />
                                     </div>

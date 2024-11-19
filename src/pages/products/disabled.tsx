@@ -8,27 +8,9 @@ import { Card } from '@/components/Card';
 import { IconSearch } from '@tabler/icons-react';
 import { ProductsTable } from '../../components/Table';
 import { Pagination } from '@/components/Pagination';
+import { Products } from '.';
 
-export interface Products {
-    barcode: string;
-    name: string;
-    description?: string;
-    flag: string;
-    createdAt: Date;
-    updatedAt: Date;
-    product_category: {
-        categories: {
-            name: string;
-        };
-    }[];
-    service_product: {
-        services: {
-            name: string;
-        };
-    }[];
-}
-
-export default function ProductsListPage() {
+export default function DisabledProductsListPage() {
     const router = useRouter();
     const [products, setProducts] = useState<Products[]>([]);
     const [search, setSearch] = useState<string>('');
@@ -38,7 +20,7 @@ export default function ProductsListPage() {
 
     const fetchProducts = useCallback(async () => {
         try {
-            const response = await fetch(`${BACKEND}/products`);
+            const response = await fetch(`${BACKEND}/products/disabled`);
             const result = await response.json();
 
             if (result.error === true) {

@@ -1,11 +1,10 @@
 import { Card } from '@/components/Card';
 import { NavigationCard } from '@/components/Card/Navigation.card';
-import { IconEyeEdit, IconTrash } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { BACKEND } from '../../../lib/utils';
-import { CategoriesTable } from './Table/Categories.table';
+import CategoriesTable from './Table/Categories.table';
 import { navCardCategories } from '../../../lib/nav.card';
-import { FormUpdateCategories } from './Update';
+import FormUpdateCategories from './Update';
 
 export interface DataCategories {
     name: string;

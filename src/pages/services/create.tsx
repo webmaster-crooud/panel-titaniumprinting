@@ -7,7 +7,6 @@ import React, { useEffect, useId, useState } from 'react';
 import { useRouter } from 'next/router';
 import { IconLoader3 } from '@tabler/icons-react';
 import { BACKEND } from '../../../lib/utils';
-import dynamic from 'next/dynamic';
 import { DataCategories } from '../categories';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';

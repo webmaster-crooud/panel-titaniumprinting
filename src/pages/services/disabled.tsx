@@ -1,7 +1,7 @@
 import { NavigationCard } from '@/components/Card/Navigation.card';
 import { DataService, navCard } from '.';
 import { Card } from '@/components/Card';
-import { ServiceTable } from './Table/Service.table';
+import ServiceTable from './Table/Service.table';
 import { useCallback, useState } from 'react';
 import { BACKEND } from '../../../lib/utils';
 import { useRouter } from 'next/router';
@@ -26,7 +26,7 @@ export default function DisabledServicePage() {
         } catch (error) {
             setAlert({ type: 'error', message: `${error}` });
         }
-    }, [router, services, setAlert]);
+    }, [router, setAlert]);
 
     return (
         <>

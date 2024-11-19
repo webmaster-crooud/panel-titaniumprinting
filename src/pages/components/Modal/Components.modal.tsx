@@ -14,7 +14,7 @@ type propsComponentsModal = {
     loading: any;
 };
 
-export const ComponentsModal: React.FC<propsComponentsModal> = ({
+const ComponentsModal: React.FC<propsComponentsModal> = ({
     modal,
     setModal,
     addPrice,
@@ -100,3 +100,5 @@ export const ComponentsModal: React.FC<propsComponentsModal> = ({
         </>
     );
 };
+
+export default ComponentsModal;
