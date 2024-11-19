@@ -14,7 +14,22 @@ export const formatCurrency = new Intl.NumberFormat('id-ID', {
     minimumFractionDigits: 0,
 });
 
-export const formatDateTIme = (dateTime: Date) => {
+export const formatDateTIme = (dateTime: Date | string) => {
     const result = moment.parseZone(dateTime);
     return moment(result).utcOffset('Asia/Jakarta').format('DD, MMMM YYYY - HH:mm');
+};
+
+export const formatDay = (dateTime: Date | string) => {
+    const result = moment.parseZone(dateTime);
+    return moment(result).utcOffset('Asia/Jakarta').format('DD');
+};
+
+export const formatDayName = (dateTime: Date | string) => {
+    const result = moment.parseZone(dateTime);
+    return moment(result).utcOffset('Asia/Jakarta').format('ddd');
+};
+
+export const formatMonth = (dateTime: Date | string) => {
+    const result = moment.parseZone(dateTime);
+    return moment(result).utcOffset('Asia/Jakarta').format('MMMM');
 };
