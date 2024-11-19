@@ -52,7 +52,7 @@ export default function CreateCategoriesPage() {
     };
 
     return (
-        <section className="relative">
+        <section className="relative py-8">
             <NavigationCard navCard={navCardCategories} />
             <Card className="w-5/12 rounded-tl-none">
                 <form onSubmit={submitCategory}>

@@ -1,6 +1,6 @@
 import { Card } from '@/components/Card';
 import { NavigationCard } from '@/components/Card/Navigation.card';
-import ServiceTable from './Table/Service.table';
+import ServiceTable from '../../components/Table/Service.table';
 import { useCallback, useEffect, useState } from 'react';
 import { BACKEND } from '../../../lib/utils';
 
@@ -34,13 +34,13 @@ export default function ServicePage() {
     }, []);
 
     return (
-        <>
+        <section className="py-8">
             <NavigationCard navCard={navCard} />
             <div className="grid grid-cols-3 items-start gap-5">
                 <Card className="rounded-tl-none col-span-2">
                     <ServiceTable services={services} fetchService={fetchService} />
                 </Card>
             </div>
-        </>
+        </section>
     );
 }

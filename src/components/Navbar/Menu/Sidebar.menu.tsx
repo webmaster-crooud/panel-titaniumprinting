@@ -61,7 +61,7 @@ export const Sidebar = ({ sidebar, setSidebar }: { sidebar: boolean; setSidebar:
     const [subMenu, setSubMenu] = useState<{ idx: number } | undefined>(undefined);
     return (
         sidebar && (
-            <aside className="fixed top-0 left-0 w-3/12 z-10 bg-slate-50/60 backdrop-blur-md h-full shadow-md overflow-y-auto">
+            <aside className="fixed top-0 left-0 w-3/12 z-10 bg-slate-50/80 backdrop-blur-md h-full shadow-md overflow-y-auto">
                 <div className="flex items-center justify-between py-8 px-5">
                     <Image
                         alt="Logo Titanium Printing"
@@ -87,7 +87,7 @@ export const Sidebar = ({ sidebar, setSidebar }: { sidebar: boolean; setSidebar:
                                         <button
                                             type="button"
                                             onClick={() => setSubMenu({ idx: index })}
-                                            className="flex items-center justify-between w-9/12 py-4 border-2 border-slate-300 rounded-full border-l-0 rounded-l-none px-3 group hover:border-blue-300 hover-animate"
+                                            className="flex items-center justify-center w-9/12 py-4 border-2 border-slate-300 rounded-full border-l-0 rounded-l-none px-3 group hover:border-blue-300 hover-animate"
                                         >
                                             <h3 className="font-medium tracking-wider text-sm text-slate-600 group-hover:text-blue-300 hover-animate">
                                                 {menu.name}
@@ -97,7 +97,7 @@ export const Sidebar = ({ sidebar, setSidebar }: { sidebar: boolean; setSidebar:
                                         {subMenu?.idx === index && (
                                             <ul className="flex flex-col gap-y-2 rounded-3xl border-2 border-slate-300 px-5 w-7/12 border-t-0 border-l-0 py-5 rounded-tr-none rounded-bl-none">
                                                 {menu.subMenu.map((subMenu, index) => (
-                                                    <Link href={subMenu.url ? subMenu.url : '/'} key={index}>
+                                                    <Link href={subMenu.url ? subMenu.url : '/'} key={index} onClick={() => setSidebar(false)}>
                                                         <h3 className="font-medium tracking-wider text-sm text-slate-500 hover:text-blue-300 hover-animate">
                                                             {subMenu.name}
                                                         </h3>
@@ -109,7 +109,8 @@ export const Sidebar = ({ sidebar, setSidebar }: { sidebar: boolean; setSidebar:
                                 ) : (
                                     <Link
                                         href={menu.url ? menu.url : '/'}
-                                        className="flex items-center justify-between w-9/12 py-4 border-2 border-slate-300 rounded-full border-l-0 rounded-l-none px-3 group hover:border-blue-300 hover-animate"
+                                        onClick={() => setSidebar(false)}
+                                        className="flex items-center justify-center w-9/12 py-4 border-2 border-slate-300 rounded-full border-l-0 rounded-l-none px-3 group hover:border-blue-300 hover-animate"
                                     >
                                         <h3 className="font-medium tracking-wider text-sm text-slate-600 group-hover:text-blue-300 hover-animate">
                                             {menu.name}

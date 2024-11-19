@@ -161,10 +161,10 @@ export default function CreateServicePage() {
         }
     };
     return (
-        <>
+        <section className="relative py-8">
             <NavigationCard navCard={navCard} />
             <div className="grid grid-cols-5 gap-5 items-start">
-                <Card className={`${loading ? 'animate-pulse' : 'animate-none'} col-span-3 rounded-tl-none min-h-[70vh]`}>
+                <Card className={`${loading ? 'animate-pulse' : 'animate-none'} col-span-3 rounded-tl-none`}>
                     <form onSubmit={submitUpdate}>
                         <div className="grid grid-cols-2 gap-5 mt-5">
                             <div>
@@ -248,6 +248,6 @@ export default function CreateServicePage() {
                     </h1>
                 </Card>
             </div>
-        </>
+        </section>
     );
 }

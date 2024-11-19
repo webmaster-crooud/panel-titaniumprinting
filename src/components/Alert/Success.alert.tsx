@@ -23,7 +23,9 @@ export const SuccessAlert = () => {
                     : '-translate-y-10 opacity-0 duration-300 ease-in-out'
             }`}
         >
-            <div className={`w-4/12 ms-auto px-3 py-2 bg-cyan-300 text-cyan-900 flex items-center justify-between`}>
+            <div
+                className={`w-4/12 ms-auto px-3 py-2 bg-blue-200 rounded-lg border border-slate-300 text-blue-900 flex items-center justify-between`}
+            >
                 <div>
                     <b>Sukses!</b>
                     <p className="font-medium text-sm">{alert?.message}</p>

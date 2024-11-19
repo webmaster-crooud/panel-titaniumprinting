@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import { BACKEND, formatCurrency } from '../../../../lib/utils';
-import ComponentsModal from '../Modal/Components.modal';
+import ComponentsModal from '../../../components/Modal/Components.modal';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../../store/Atom';
 import { useRouter } from 'next/router';
@@ -86,7 +86,7 @@ export default function CreateComponentPage() {
     };
 
     return (
-        <form className="w-full grid grid-cols-2 gap-5" onSubmit={sumbitCreate}>
+        <form className="w-full grid grid-cols-2 gap-5 py-8" onSubmit={sumbitCreate}>
             <Card className="full">
                 <div className="flex items-center justify-between mb-8">
                     <h1 className="text-xl font-semibold text-slate-700">Tambah Data Komponen</h1>
@@ -102,7 +102,7 @@ export default function CreateComponentPage() {
                     <div className="w-full relative">
                         <label
                             htmlFor="NameComponent"
-                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-slate-200 left-5 ${
+                            className={`text-sm uppercase font-semibold block absolute -top-2.5 bg-blue-100 left-5 ${
                                 errorValidation?.type === 'name' ? 'text-red-500' : 'text-slate-700'
                             }`}
                         >
@@ -128,7 +128,7 @@ export default function CreateComponentPage() {
                     <div className="w-full relative">
                         <label
                             htmlFor="TypeComponent"
-                            className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-slate-200 left-5"
+                            className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-blue-100 left-5"
                         >
                             Tipe Komponen
                         </label>
@@ -179,7 +179,7 @@ export default function CreateComponentPage() {
                         <div className="w-full relative">
                             <label
                                 htmlFor="priceComponent"
-                                className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-slate-200 left-5"
+                                className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-blue-100 left-5"
                             >
                                 Harga Jual
                             </label>
@@ -196,7 +196,7 @@ export default function CreateComponentPage() {
                         <div className="w-full relative">
                             <label
                                 htmlFor="priceComponent"
-                                className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-slate-200 left-5"
+                                className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-blue-100 left-5"
                             >
                                 Harga Modal
                             </label>

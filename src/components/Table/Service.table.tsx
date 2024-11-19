@@ -3,14 +3,14 @@ import { IconActivity, IconEye, IconTransform, IconLoader3, IconSearch, IconStar
 import React, { useEffect, useState } from 'react';
 import 'react-tippy/dist/tippy.css';
 import { Tooltip } from 'react-tippy';
-import { Pagination } from '../../../components/Pagination';
-import { DataService } from '..';
+import { Pagination } from '../Pagination';
+import { DataService } from '../../pages/services';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { BACKEND } from '../../../../lib/utils';
+import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
-import { alertShow } from '../../../../store/Atom';
+import { alertShow } from '../../../store/Atom';
 
 const ServiceTable = ({ fetchService, services }: { fetchService: any; services: DataService[] }) => {
     const router = useRouter();
@@ -146,7 +146,7 @@ const ServiceTable = ({ fetchService, services }: { fetchService: any; services:
                     </label>
                 </div>
 
-                <div className="flex items-center justify-end">
+                <div className="flex items-center justify-end rounded-lg border border-slate-400 overflow-hidden">
                     <input
                         type="text"
                         value={search}
@@ -154,7 +154,7 @@ const ServiceTable = ({ fetchService, services }: { fetchService: any; services:
                         placeholder="Cari kategori..."
                         className="bg-slate-100  px-3 py-1.5 rounded rounded-r-none font-semibold focus:outline-none w-full"
                     />
-                    <button className="bg-slate-300 text-slate-600  px-3 py-1.5 rounded rounded-l-none font-semibold">
+                    <button className="bg-slate-200 text-slate-600  px-3 py-1.5 rounded rounded-l-none font-semibold">
                         <IconSearch size={20} stroke={2.5} />
                     </button>
                 </div>
@@ -164,7 +164,7 @@ const ServiceTable = ({ fetchService, services }: { fetchService: any; services:
                 <thead>
                     <tr className="bg-slate-600 py-2">
                         <th></th>
-                        <th className="text-slate-100  text-start py-2 px-3">Layanan</th>
+                        <th className="text-slate-100  text-start py-2 px-3 text-sm font-medium">Layanan</th>
                         <th className="text-slate-100 text-center py-2">
                             <div className="flex items-center justify-center">
                                 <IconActivity size={15} />

@@ -79,7 +79,7 @@ export default function ProductsListPage() {
     };
 
     return (
-        <>
+        <section className="relative py-8">
             <NavigationCard navCard={navCard} />
             <Card className="w-10/12 rounded-tl-none">
                 <div className="flex items-center justify-between mb-5">
@@ -115,6 +115,6 @@ export default function ProductsListPage() {
                     <Pagination currentPage={currentPage} totalItems={filteredProducts.length} itemsPerPage={limit} onPageChange={handlePageChange} />
                 )}
             </Card>
-        </>
+        </section>
     );
 }

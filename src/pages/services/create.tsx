@@ -93,10 +93,10 @@ export default function CreateServicePage() {
     };
 
     return (
-        <>
+        <section className="relative py-8">
             <NavigationCard navCard={navCard} />
             <div className="grid grid-cols-4 gap-5 items-start">
-                <Card className="col-span-2 rounded-tl-none h-[50vh]">
+                <Card className="col-span-2 rounded-tl-none">
                     <form onSubmit={submitCreate}>
                         <div className="grid grid-cols-2 gap-5 mt-5">
                             <div>
@@ -149,6 +149,6 @@ export default function CreateServicePage() {
                     </form>
                 </Card>
             </div>
-        </>
+        </section>
     );
 }

@@ -9,13 +9,13 @@ import {
     IconTrash,
     IconX,
 } from '@tabler/icons-react';
-import { DataCategories } from '..';
+import { DataCategories } from '../../pages/categories';
 import React, { useState } from 'react';
 import 'react-tippy/dist/tippy.css';
 import { Tooltip } from 'react-tippy';
 import { useSetAtom } from 'jotai';
-import { alertShow } from '../../../../store/Atom';
-import { BACKEND } from '../../../../lib/utils';
+import { alertShow } from '../../../store/Atom';
+import { BACKEND } from '../../../lib/utils';
 
 const CategoriesTable = ({
     categories,
@@ -84,10 +84,10 @@ const CategoriesTable = ({
 
     return (
         <>
-            <div className="flex items-center justify-center mb-5">
+            <div className="flex items-center justify-center mb-5 border border-slate-400 rounded-lg w-8/12 mx-auto">
                 <input
                     type="text"
-                    className="w-6/12 rounded-l-lg bg-slate-50 text-slate-800 px-3 py-2 text-sm outline-none"
+                    className="w-full rounded-l-lg bg-blue-50 text-slate-800 px-3 py-2 text-sm outline-none"
                     placeholder="Cari Kategori..."
                     autoComplete="off"
                     value={search}
@@ -105,7 +105,7 @@ const CategoriesTable = ({
                                 <IconNumber123 size={18} />
                             </div>
                         </th>
-                        <th className="py-1 font-semibold text-start">Nama Kategori</th>
+                        <th className="py-1 font-medium text-start text-sm">Nama Kategori</th>
                         <th>
                             <div className="flex items-center justify-center">
                                 <IconSettings2 size={18} />

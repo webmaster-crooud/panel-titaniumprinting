@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Component } from '..';
+import { Component } from '../../pages/components';
 import { Card } from '@/components/Card';
 import { IconCloudUpload, IconTransform, IconLoader3, IconSettings, IconTrash } from '@tabler/icons-react';
 import { Tooltip } from 'react-tippy';
 import { useRouter } from 'next/router';
-import { BACKEND } from '../../../../lib/utils';
+import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
-import { alertShow } from '../../../../store/Atom';
+import { alertShow } from '../../../store/Atom';
 
 type propsComponentsTable = {
     components: Component[];
