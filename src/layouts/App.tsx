@@ -7,6 +7,7 @@ import { ErrorAlert } from '@/components/Alert/Error.alert';
 import { useAtom } from 'jotai';
 import { alertShow } from '../../store/Atom';
 import { SuccessAlert } from '@/components/Alert/Success.alert';
+import { Header } from '@/components/Header';
 
 export const LayoutApp = ({ children }: { children: React.ReactNode }) => {
     const [alert] = useAtom(alertShow);
@@ -24,6 +25,7 @@ export const LayoutApp = ({ children }: { children: React.ReactNode }) => {
                 {alert?.type === 'success' && <SuccessAlert />}
                 <section className="w-11/12 mx-auto min-h-screen pb-10">
                     <Breadcrumb />
+                    <Header />
                     {children}
                 </section>
             </main>
