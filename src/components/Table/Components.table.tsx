@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Component } from '../../pages/components';
+import { Component } from '../../pages/components/_temp';
 import { Card } from '@/components/Card';
 import { IconCloudUpload, IconTransform, IconLoader3, IconSettings, IconTrash } from '@tabler/icons-react';
 import { Tooltip } from 'react-tippy';

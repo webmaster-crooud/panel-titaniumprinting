@@ -5,7 +5,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'http', // atau 'https' sesuai protocol backend Anda
-                hostname: '127.0.0.1', // sesuaikan dengan hostname backend Anda
+                hostname: 'localhost', // sesuaikan dengan hostname backend Anda
                 port: '3001', // sesuaikan dengan port backend Anda
                 pathname: '/public/**', // mengizinkan akses ke semua file di folder public
             },

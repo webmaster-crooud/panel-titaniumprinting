@@ -7,15 +7,18 @@ import { BACKEND } from '../../../lib/utils';
 import { useRouter } from 'next/router';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 export default function DisabledServicePage() {
     const router = useRouter();
     const [services, setServices] = useState<DataService[]>([]);
     const setAlert = useSetAtom(alertShow);
+    const { token, refreshToken } = useAuthToken();
 
     const fetchService = useCallback(async () => {
         try {
-            const response = await fetch(`${BACKEND}/services/disabled`);
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/services/disabled`);
             const result = await response.json();
             if (result.error === true) {
                 setAlert({ type: 'error', message: result.message });
