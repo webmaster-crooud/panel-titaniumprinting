@@ -4,7 +4,7 @@ import { BACKEND } from '../../../../lib/utils';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../../store/Atom';
 import { Card } from '@/components/Card';
-import { Component } from '..';
+import { Component } from '../_temp';
 import { IconArrowBack, IconCheck, IconCirclePlus, IconEye, IconTransform, IconLoader3, IconTrash, IconX } from '@tabler/icons-react';
 import Link from 'next/link';
 import CurrencyInput from 'react-currency-input-field';

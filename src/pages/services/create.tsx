@@ -10,15 +10,11 @@ import { BACKEND } from '../../../lib/utils';
 import { DataCategories } from '../categories';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 interface Services {
     name: string;
-    categoryService: any;
-}
-
-interface CategoryOption {
-    value: number;
-    label: string;
 }
 
 export default function CreateServicePage() {
@@ -27,13 +23,11 @@ export default function CreateServicePage() {
     const setAlert = useSetAtom(alertShow);
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState<string>('');
-    const [categories, setCategories] = useState<CategoryOption[]>([]);
-    const [selectedCategories, setSelectedCategories] = useState<CategoryOption[]>([]);
+    const { token, refreshToken } = useAuthToken();
 
     // Formated Input Form to JSON stringify
     const data: Services = {
         name,
-        categoryService: selectedCategories.map((option) => ({ categoryId: option.value })),
     };
 
     const submitCreate = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,7 +38,7 @@ export default function CreateServicePage() {
             setLoading(true);
             try {
                 await new Promise((resolve) => setTimeout(resolve, 1500));
-                const response = await fetch(`${BACKEND}/services`, {
+                const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/services`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
@@ -62,34 +56,6 @@ export default function CreateServicePage() {
                 setLoading(false);
             }
         }
-    };
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const res = await fetch(`${BACKEND}/categories`);
-                const result = await res.json();
-                if (result.error === true) {
-                    console.log('ERROR');
-                    return;
-                } else {
-                    setCategories(
-                        result.data.map((category: DataCategories) => ({
-                            value: category.id,
-                            label: category.name,
-                        })),
-                    );
-                }
-            } catch (error) {
-                console.log('ERROR');
-            }
-        };
-
-        fetchCategories();
-    }, []);
-
-    const handleCategoryChange = (newValue: MultiValue<CategoryOption>) => {
-        setSelectedCategories(newValue as CategoryOption[]);
     };
 
     return (
@@ -112,24 +78,6 @@ export default function CreateServicePage() {
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
                                     placeholder="Masukan nama layanan..."
                                 />
-                            </div>
-                            <div>
-                                <label htmlFor={`${uniqueId}-category-input`} className="font-semibold text-sm block mb-2">
-                                    Kategori
-                                </label>
-                                <div>
-                                    <Select
-                                        isMulti
-                                        id={useId()}
-                                        options={categories}
-                                        value={selectedCategories}
-                                        onChange={handleCategoryChange}
-                                        instanceId={`${uniqueId}-category`}
-                                        inputId={`${uniqueId}-category-input`}
-                                        className="react-select"
-                                        classNamePrefix="react-select"
-                                    />
-                                </div>
                             </div>
                         </div>
 

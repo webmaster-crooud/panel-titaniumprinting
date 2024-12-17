@@ -5,6 +5,8 @@ import { Card } from '@/components/Card';
 import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 interface Categories {
     categoryId: number | string;
@@ -27,10 +29,12 @@ export const CategoriesUpdateProductModal: React.FC<propsCategoriesProductModal>
     const [categories, setCategories] = useState<Categories>({ categoryId: categoryId });
     const [categoryList, setCategoryList] = useState<{ id: number; name: string }[]>([]);
     const setAlert = useSetAtom(alertShow);
+
+    const { token, refreshToken } = useAuthToken();
     useEffect(() => {
         const fetchCategoryList = async () => {
             try {
-                const response = await fetch(`${BACKEND}/categories`);
+                const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/categories`);
                 const result = await response.json();
                 if (result.error === true) {
                     setAlert({ type: 'error', message: result.message });
@@ -41,7 +45,7 @@ export const CategoriesUpdateProductModal: React.FC<propsCategoriesProductModal>
             }
         };
         fetchCategoryList();
-    }, [setAlert]);
+    }, [setAlert, token, refreshToken]);
 
     const OptionCategory = () => {
         if (categoryList) {
@@ -58,7 +62,7 @@ export const CategoriesUpdateProductModal: React.FC<propsCategoriesProductModal>
         setLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            const response = await fetch(`${BACKEND}/products/update/category/${barcode}/${categoryId}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/update/category/${barcode}/${categoryId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(categories),
@@ -150,10 +154,12 @@ export const CategoriesCreateProductModal: React.FC<propsCategoriesCreateProduct
     const [categories, setCategories] = useState<Categories>({ categoryId: '' });
     const [categoryList, setCategoryList] = useState<{ id: number; name: string }[]>([]);
     const setAlert = useSetAtom(alertShow);
+
+    const { token, refreshToken } = useAuthToken();
     useEffect(() => {
         const fetchCategoryList = async () => {
             try {
-                const response = await fetch(`${BACKEND}/categories`);
+                const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/categories`);
                 const result = await response.json();
                 if (result.error === true) {
                     setAlert({ type: 'error', message: result.message });
@@ -164,7 +170,7 @@ export const CategoriesCreateProductModal: React.FC<propsCategoriesCreateProduct
             }
         };
         fetchCategoryList();
-    }, [setAlert]);
+    }, [setAlert, token, refreshToken]);
 
     const OptionCategory = () => {
         if (categoryList) {
@@ -175,12 +181,13 @@ export const CategoriesCreateProductModal: React.FC<propsCategoriesCreateProduct
             ));
         }
     };
+
     const submitCreate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            const response = await fetch(`${BACKEND}/products/category/create`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/category/create`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

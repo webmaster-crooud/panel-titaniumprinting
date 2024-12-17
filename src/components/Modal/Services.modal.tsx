@@ -5,6 +5,8 @@ import { Card } from '@/components/Card';
 import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 interface Services {
     barcodeService: number | string;
@@ -27,10 +29,12 @@ export const ServicesUpdateProductModal: React.FC<propsServicesProductModal> = (
     const [services, setServices] = useState<Services>({ barcodeService: barcodeService });
     const [serviceList, setServiceList] = useState<{ barcode: number; name: string }[]>([]);
     const setAlert = useSetAtom(alertShow);
+
+    const { token, refreshToken } = useAuthToken();
     useEffect(() => {
         const fetchServiceList = async () => {
             try {
-                const response = await fetch(`${BACKEND}/services`);
+                const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/services`);
                 const result = await response.json();
                 if (result.error === true) {
                     setAlert({ type: 'error', message: result.message });
@@ -41,7 +45,7 @@ export const ServicesUpdateProductModal: React.FC<propsServicesProductModal> = (
             }
         };
         fetchServiceList();
-    }, [setAlert]);
+    }, [setAlert, token, refreshToken]);
 
     const OptionService = () => {
         if (serviceList) {
@@ -58,7 +62,7 @@ export const ServicesUpdateProductModal: React.FC<propsServicesProductModal> = (
         setLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            const response = await fetch(`${BACKEND}/products/update/service/${barcode}/${barcodeService}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/update/service/${barcode}/${barcodeService}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(services),
@@ -149,10 +153,11 @@ export const ServicesCreateProductModal: React.FC<propsServicesCreateProductModa
     const [serviceList, setServiceList] = useState<{ barcode: number; name: string }[]>([]);
     const setAlert = useSetAtom(alertShow);
 
+    const { token, refreshToken } = useAuthToken();
     useEffect(() => {
         const fetchServiceList = async () => {
             try {
-                const response = await fetch(`${BACKEND}/Services`);
+                const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/Services`);
                 const result = await response.json();
                 if (result.error === true) {
                     setAlert({ type: 'error', message: result.message });
@@ -163,7 +168,7 @@ export const ServicesCreateProductModal: React.FC<propsServicesCreateProductModa
             }
         };
         fetchServiceList();
-    }, [setAlert]);
+    }, [setAlert, token, refreshToken]);
 
     const Optionservice = () => {
         if (serviceList) {
@@ -179,7 +184,7 @@ export const ServicesCreateProductModal: React.FC<propsServicesCreateProductModa
         setLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            const response = await fetch(`${BACKEND}/products/services/create`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/services/create`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -272,12 +277,14 @@ export const ServicesDeletedProductModal: React.FC<propsServicesProductModal> = 
     const [modalDelete, setModalDelete] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const setAlert = useSetAtom(alertShow);
+
+    const { token, refreshToken } = useAuthToken();
     const submitDelete = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            const response = await fetch(`${BACKEND}/products/delete/services/${barcode}/${barcodeService}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/delete/services/${barcode}/${barcodeService}`, {
                 method: 'DELETE',
             });
             const result = await response.json();

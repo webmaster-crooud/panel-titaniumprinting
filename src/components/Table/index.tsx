@@ -12,11 +12,13 @@ import {
 } from '@tabler/icons-react';
 import Link from 'next/link';
 import { Tooltip } from 'react-tippy';
-import { BACKEND, formatDateTIme } from '../../../lib/utils';
+import { BACKEND, formatMoment } from '../../../lib/utils';
 import { Products } from '../../pages/products';
 import React, { useState } from 'react';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 type propsProductsTable = {
     products: Products[];
@@ -26,12 +28,13 @@ type propsProductsTable = {
 
 export const ProductsTable: React.FC<propsProductsTable> = ({ products, filteredProducts, fetchProducts }) => {
     const [loading, setLoading] = useState<{ func: string; idx?: number } | undefined>(undefined);
+    const { token, refreshToken } = useAuthToken();
     const setAlert = useSetAtom(alertShow);
     const handlerChangeFlag = async (barcode: string, idx?: number) => {
         setLoading({ func: 'changeFlag', idx });
         try {
             await new Promise((resolve) => setTimeout(resolve, 2000));
-            const response = await fetch(`${BACKEND}/products/${barcode}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/${barcode}`, {
                 method: 'PATCH',
             });
 
@@ -52,7 +55,7 @@ export const ProductsTable: React.FC<propsProductsTable> = ({ products, filtered
         setLoading({ func: 'favourite', idx });
         try {
             await new Promise((resolve) => setTimeout(resolve, 2000));
-            const response = await fetch(`${BACKEND}/products/${barcode}/favourite`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/${barcode}/favourite`, {
                 method: 'PATCH',
             });
 
@@ -73,7 +76,7 @@ export const ProductsTable: React.FC<propsProductsTable> = ({ products, filtered
         setLoading({ func: 'delete', idx });
         try {
             await new Promise((resolve) => setTimeout(resolve, 2000));
-            const response = await fetch(`${BACKEND}/products/${barcode}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/${barcode}`, {
                 method: 'DELETE',
             });
 
@@ -147,7 +150,7 @@ export const ProductsTable: React.FC<propsProductsTable> = ({ products, filtered
                                                         type="button"
                                                         disabled={loading?.func === 'favourite'}
                                                         onClick={() => handleFavouriteProducts(product.barcode, index)}
-                                                        className="text-yellow-500 -mt-1"
+                                                        className="text-yellow-500"
                                                     >
                                                         {loading?.func === 'favourite' && loading.idx === index ? (
                                                             <IconLoader3 className="animate-spin" size={17} stroke={2} />
@@ -248,7 +251,9 @@ export const ProductsTable: React.FC<propsProductsTable> = ({ products, filtered
                                     </div>
                                 </td>
                                 <td className="px-3">
-                                    <div className="flex items-center justify-end text-xs">{formatDateTIme(product.createdAt)}</div>
+                                    <div className="flex items-center justify-end text-xs font-medium">
+                                        {formatMoment(product.createdAt).format('DD MMMM YYYY - HH.mm')} WIB
+                                    </div>
                                 </td>
                             </tr>
                         ))}

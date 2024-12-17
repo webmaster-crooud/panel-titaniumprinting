@@ -1,10 +1,15 @@
 import { Card } from '@/components/Card';
 import { NavigationCard } from '@/components/Card/Navigation.card';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BACKEND } from '../../../lib/utils';
 import CategoriesTable from '../../components/Table/Categories.table';
 import { navCardCategories } from '../../../lib/nav.card';
 import FormUpdateCategories from '../../components/Card/CategoriesUpdate.card';
+import { useSetAtom } from 'jotai';
+import { alertShow } from '../../../store/Atom';
+import { useRouter } from 'next/router';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 export interface DataCategories {
     name: string;
@@ -13,25 +18,33 @@ export interface DataCategories {
 }
 
 export default function CategoriesPage() {
+    const router = useRouter();
     const [categories, setCategories] = useState<DataCategories[]>([]);
     const [update, setUpdate] = useState<{ id: number; status: boolean } | undefined>(undefined);
     const [categoryUpdate, setCategoryUpdate] = useState<DataCategories | undefined>(undefined);
-    const fetchCategories: () => Promise<void> = async () => {
+    const setAlert = useSetAtom(alertShow);
+
+    const { token, refreshToken } = useAuthToken();
+    const fetchCategories: () => Promise<void> = useCallback(async () => {
         try {
-            const response = await fetch(`${BACKEND}/categories`);
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/categories`);
             const result = await response.json();
             if (result.error === true) {
-                console.log(result.message);
+                router.push('/');
+                setAlert({
+                    type: 'error',
+                    message: result.message,
+                });
             } else {
                 setCategories(result.data);
             }
         } catch (error) {
-            console.log('ERROR');
+            setAlert({ type: 'error', message: `${error}` });
         }
-    };
+    }, [refreshToken, router, setAlert, token]);
     useEffect(() => {
         fetchCategories();
-    }, []);
+    }, [fetchCategories]);
 
     const handlerUpdate = (id: number, name: string) => {
         setUpdate({ id, status: true });

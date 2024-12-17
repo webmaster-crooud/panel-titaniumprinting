@@ -11,6 +11,8 @@ import Link from 'next/link';
 import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 const ServiceTable = ({ fetchService, services }: { fetchService: any; services: DataService[] }) => {
     const router = useRouter();
@@ -19,6 +21,7 @@ const ServiceTable = ({ fetchService, services }: { fetchService: any; services:
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState('');
     const setAlert = useSetAtom(alertShow);
+    const { token, refreshToken } = useAuthToken();
     const [loadingFav, setLoadingFav] = useState<{
         status: boolean;
         barcode: string | undefined;
@@ -64,7 +67,7 @@ const ServiceTable = ({ fetchService, services }: { fetchService: any; services:
         setLoadingFav({ barcode, status: true });
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            const response = await fetch(`${BACKEND}/services/${barcode}/favourite`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/services/${barcode}/favourite`, {
                 method: 'PATCH',
             });
 
@@ -85,7 +88,7 @@ const ServiceTable = ({ fetchService, services }: { fetchService: any; services:
         setLoadingDelete({ barcode, status: true });
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            const response = await fetch(`${BACKEND}/services/${barcode}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/services/${barcode}`, {
                 method: 'PATCH',
             });
 
@@ -106,7 +109,7 @@ const ServiceTable = ({ fetchService, services }: { fetchService: any; services:
         setLoadingDelete({ barcode, status: true });
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            const response = await fetch(`${BACKEND}/services/${barcode}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/services/${barcode}`, {
                 method: 'DELETE',
             });
 

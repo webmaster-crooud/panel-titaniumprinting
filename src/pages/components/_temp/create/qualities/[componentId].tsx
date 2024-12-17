@@ -30,7 +30,6 @@ export default function CreateQualityPage() {
     const [errorValidation, setErrorValidation] = useState<{ type: string; message: string } | undefined>(undefined);
     const [sizes, setSizes] = useState<DataSize[]>([{ width: 0, cogs: 0, height: 0, length: 0, price: 0, weight: 0 }]);
 
-    console.log(sizes);
     useEffect(() => {
         const getNameComponent = async () => {
             const response = await fetch(`${BACKEND}/components/${componentId}`);
