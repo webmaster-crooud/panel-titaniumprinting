@@ -6,6 +6,8 @@ import { Card } from '@/components/Card';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
 import { BACKEND } from '../../../lib/utils';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 type propsProductUpdateModal = {
     product?: DetailProducts;
@@ -20,12 +22,13 @@ export const ProductUpdateModal: React.FC<propsProductUpdateModal> = ({ product,
     const [slug, setSlug] = useState(product?.slug ? product.slug : '');
     const [description, setDescription] = useState(product?.description ? product.description : '');
 
+    const { token, refreshToken } = useAuthToken();
     const submitUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 2000));
-            const response = await fetch(`${BACKEND}/products/update/${barcode}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/update/${barcode}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

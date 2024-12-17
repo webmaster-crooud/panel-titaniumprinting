@@ -6,8 +6,10 @@ import { Card } from '@/components/Card';
 import { DetailProductTable } from '../../components/Table/Detail.table';
 import { ComponentProductTable } from '../../components/Table/Component.table';
 import Link from 'next/link';
-import CoverImageProduct from './Images/Cover.images';
-import ImageProduct from './Images';
+import CoverImageProduct from '../../components/Section/Cover.images';
+import ImageProduct from '../../components/Section';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 export interface DetailProducts {
     name: string;
@@ -58,10 +60,12 @@ export default function DetailProductPage() {
     const { barcode } = router.query;
     const [product, setProduct] = useState<DetailProducts | undefined>(undefined);
     const [loading, setLoading] = useState(false);
+
+    const { token, refreshToken } = useAuthToken();
     const fetchProduct = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await fetch(`${BACKEND}/products/${barcode}`);
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/${barcode}`);
             const result = await response.json();
 
             setProduct(result.data);
@@ -70,13 +74,13 @@ export default function DetailProductPage() {
         } finally {
             setLoading(false);
         }
-    }, [barcode]);
+    }, [barcode, token, refreshToken]);
     useEffect(() => {
         fetchProduct();
     }, [fetchProduct]);
 
     return (
-        <section className="relative">
+        <section className="relative py-8">
             {loading ? (
                 <div className="w-full h-screen fixed top-0 right-0 left-0 bg-black/10 backdrop-blur-sm">
                     <div className="flex items-center justify-center h-full min-w-full">

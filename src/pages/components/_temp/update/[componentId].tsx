@@ -4,13 +4,13 @@ import { BACKEND } from '../../../../lib/utils';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../../store/Atom';
 import { Card } from '@/components/Card';
-import { Component } from '..';
+import { Component } from '../_temp';
 import { IconArrowBack, IconCheck, IconCirclePlus, IconEye, IconTransform, IconLoader3, IconTrash, IconX } from '@tabler/icons-react';
 import Link from 'next/link';
 import CurrencyInput from 'react-currency-input-field';
 import { Tooltip } from 'react-tippy';
-import QualitiesUpdateModal from '../Modal/QualitiesUpdate.modal';
-import SizeUpdateModal from '../Modal/SizeUpdate.modal';
+import QualitiesUpdateModal from '../../../components/Modal/QualitiesUpdate.modal';
+import SizeUpdateModal from '../../../components/Modal/SizeUpdate.modal';
 
 const COMPONENT_TYPES = [
     { value: 'MATERIAL', label: 'Material' },
@@ -149,7 +149,7 @@ export default function DetailComponentPage() {
     };
 
     return (
-        <>
+        <section className="relative py-8">
             {loading?.func === 'fetch' ? (
                 <div className="w-full h-screen flex items-center justify-center bg-black/20 fixed top-0 right-0 left-0 gap-2 backdrop-blur-sm">
                     <IconLoader3 className="animate-spin text-blue-700" size={50} />{' '}
@@ -173,7 +173,7 @@ export default function DetailComponentPage() {
                                     <div className="relative w-full">
                                         <label
                                             htmlFor="componentName"
-                                            className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-slate-200 left-5"
+                                            className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-blue-100 left-5"
                                         >
                                             Nama Komponen
                                         </label>
@@ -191,7 +191,7 @@ export default function DetailComponentPage() {
                                     <div className="w-full relative">
                                         <label
                                             htmlFor="TypeComponent"
-                                            className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-slate-200 left-5"
+                                            className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-blue-100 left-5"
                                         >
                                             Tipe Komponen
                                         </label>
@@ -216,7 +216,7 @@ export default function DetailComponentPage() {
                                         <div className="relative w-full">
                                             <label
                                                 htmlFor="componentPrice"
-                                                className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-slate-200 left-5"
+                                                className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-blue-100 left-5"
                                             >
                                                 Harga Jual
                                             </label>
@@ -238,7 +238,7 @@ export default function DetailComponentPage() {
                                         <div className="relative w-full">
                                             <label
                                                 htmlFor="componentPrice"
-                                                className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-slate-200 left-5"
+                                                className="text-sm uppercase font-semibold text-slate-700 block absolute -top-2.5 bg-blue-100 left-5"
                                             >
                                                 Harga Modal
                                             </label>
@@ -403,6 +403,6 @@ export default function DetailComponentPage() {
                     )}
                 </>
             )}
-        </>
+        </section>
     );
 }

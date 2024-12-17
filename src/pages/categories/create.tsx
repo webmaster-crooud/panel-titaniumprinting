@@ -7,6 +7,8 @@ import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
 import { IconLoader3 } from '@tabler/icons-react';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 export default function CreateCategoriesPage() {
     const router = useRouter();
@@ -14,6 +16,7 @@ export default function CreateCategoriesPage() {
     const [errorValidation, setErrorValidation] = useState<{ name: string; message: string } | undefined>(undefined);
     const [name, setName] = useState<string>('');
     const setAlert = useSetAtom(alertShow);
+    const { token, refreshToken } = useAuthToken();
 
     const handlerChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
@@ -30,7 +33,7 @@ export default function CreateCategoriesPage() {
             setLoading(true);
             try {
                 await new Promise((resolve) => setTimeout(resolve, 1500));
-                const response = await fetch(`${BACKEND}/categories`, {
+                const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/categories`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name }),
@@ -52,7 +55,7 @@ export default function CreateCategoriesPage() {
     };
 
     return (
-        <section className="relative">
+        <section className="relative py-8">
             <NavigationCard navCard={navCardCategories} />
             <Card className="w-5/12 rounded-tl-none">
                 <form onSubmit={submitCategory}>

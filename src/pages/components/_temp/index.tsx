@@ -2,12 +2,42 @@ import { Card } from '@/components/Card';
 import { IconCirclePlus, IconLoader3 } from '@tabler/icons-react';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
-import { BACKEND } from '../../../lib/utils';
+import { BACKEND } from '../../../../lib/utils';
 import { useSetAtom } from 'jotai';
-import { alertShow } from '../../../store/Atom';
-import ComponentsTable from '../../components/Table/Components.table';
+import { alertShow } from '../../../../store/Atom';
+import ComponentsTable from '../../../components/Table/Components.table';
 import { NavigationCard } from '@/components/Card/Navigation.card';
-import { Component } from './_temp';
+
+enum TYPECOMPONENT {
+    MATERIAL,
+    ADDON,
+    FINISHING,
+    PROCESSING,
+    CONSUMING,
+}
+
+export interface Component {
+    id: string | undefined;
+    name: string | undefined;
+    flag: string | undefined;
+    typeComponent: string | undefined;
+    createdAt: Date | undefined;
+    updatedAt: Date | undefined;
+    qualities: {
+        id: number | string;
+        name: string;
+        orientation: boolean;
+        sizes: {
+            id: number;
+            width: number;
+            height: number;
+            length: number;
+            weight: number;
+            price: number;
+            cogs: number;
+        }[];
+    }[];
+}
 
 type propsLoading = {
     func: string;
@@ -20,7 +50,7 @@ export const navCardComponent = [
     { title: 'Disabled Layanan', url: '/components/disabled' },
 ];
 
-export default function DisabledComponentsPage() {
+export default function ComponentsPage() {
     const [components, setComponents] = useState<Component[]>([]);
     const [loading, setLoading] = useState<propsLoading | undefined>(undefined);
     const setAlert = useSetAtom(alertShow);
@@ -37,7 +67,7 @@ export default function DisabledComponentsPage() {
                 if (useLoading) {
                     await new Promise((resolve) => setTimeout(resolve, 2000));
                 }
-                const res = await fetch(`${BACKEND}/components/disabled`);
+                const res = await fetch(`${BACKEND}/components`);
                 const result = await res.json();
                 if (result.error === true) {
                     setAlert({ type: 'error', message: result.message });

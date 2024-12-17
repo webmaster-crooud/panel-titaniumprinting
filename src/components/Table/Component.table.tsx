@@ -28,7 +28,7 @@ export const ComponentProductTable: React.FC<propsComponentProductTable> = ({ pr
                 </Tooltip>
 
                 <Tooltip title="Detail Komponen" position="left" size="small" arrow>
-                    <button type="button" onClick={() => router.push(`/components/update/${data.component.id}`)} className="text-cyan-500">
+                    <button type="button" onClick={() => router.push(`/components/${data.component.id}`)} className="text-cyan-500">
                         <IconFolderOpen size={18} stroke={2} />
                     </button>
                 </Tooltip>
@@ -43,7 +43,7 @@ export const ComponentProductTable: React.FC<propsComponentProductTable> = ({ pr
                 <tbody className="w-full text-sm">
                     <tr className="border-b border-slate-500">
                         <td className="px-3 py-2 font-semibold">Min. Komponen</td>
-                        <td className="px-3 py-2">{`${data.minQty} ${data.typePieces ? `/ ${data.typePieces}` : ''}`}</td>
+                        <td className="px-3 py-2">{`${data.minQty}`}</td>
                     </tr>
                     <tr className="border-b border-slate-500">
                         <td className="px-3 py-2 font-semibold">Komponen</td>

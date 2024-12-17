@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { BACKEND, formatDateTIme } from '../../../lib/utils';
+import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
 import { useRouter } from 'next/router';
@@ -8,6 +8,8 @@ import { Card } from '@/components/Card';
 import { IconSearch } from '@tabler/icons-react';
 import { ProductsTable } from '../../components/Table';
 import { Pagination } from '@/components/Pagination';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 export interface Products {
     barcode: string;
@@ -36,22 +38,23 @@ export default function ProductsListPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const setAlert = useSetAtom(alertShow);
 
+    const { token, refreshToken } = useAuthToken();
     const fetchProducts = useCallback(async () => {
         try {
-            const response = await fetch(`${BACKEND}/products`);
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products`);
             const result = await response.json();
 
             if (result.error === true) {
                 setAlert({ type: 'error', message: result.message });
                 router.push('/');
+            } else {
+                setProducts(result.data);
             }
-
-            setProducts(result.data);
         } catch (error) {
             setAlert({ type: 'error', message: `${error}` });
             router.push('/');
         }
-    }, [router, setAlert]);
+    }, [router, setAlert, refreshToken, token]);
 
     useEffect(() => {
         fetchProducts();
@@ -79,7 +82,7 @@ export default function ProductsListPage() {
     };
 
     return (
-        <>
+        <section className="relative py-8">
             <NavigationCard navCard={navCard} />
             <Card className="w-10/12 rounded-tl-none">
                 <div className="flex items-center justify-between mb-5">
@@ -115,6 +118,6 @@ export default function ProductsListPage() {
                     <Pagination currentPage={currentPage} totalItems={filteredProducts.length} itemsPerPage={limit} onPageChange={handlePageChange} />
                 )}
             </Card>
-        </>
+        </section>
     );
 }

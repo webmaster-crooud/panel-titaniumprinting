@@ -2,7 +2,7 @@ import { Card } from '@/components/Card';
 import { NavigationCard } from '@/components/Card/Navigation.card';
 import { useEffect, useState } from 'react';
 import { BACKEND } from '../../../lib/utils';
-import CategoriesTable from './Table/Categories.table';
+import CategoriesTable from '../../components/Table/Categories.table';
 import { navCardCategories } from '../../../lib/nav.card';
 
 export interface DataCategories {
@@ -30,9 +30,9 @@ export default function DisabledCategoriesPage() {
     }, []);
 
     return (
-        <section className="relative">
+        <section className="relative py-8">
             <NavigationCard navCard={navCardCategories} />
-            <Card className="w-5/12 rounded-tl-none">
+            <Card className="w-7/12 rounded-tl-none">
                 <CategoriesTable categories={categories} fetchCategories={fetchCategories} />
             </Card>
         </section>

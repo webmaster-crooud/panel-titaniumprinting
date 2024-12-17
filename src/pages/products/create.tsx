@@ -9,6 +9,8 @@ import { BACKEND } from '../../../lib/utils';
 import { NavigationCard } from '@/components/Card/Navigation.card';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 interface ServicesList {
     name?: string;
@@ -104,11 +106,12 @@ export default function CreateProductPage() {
     const [images, setImages] = useState<Images[]>([]);
     const [fileImages, setFileImage] = useState<FileImage[]>([]);
     const [productComponent, setProductComponent] = useState<ProductComponent[]>([{ componentId: '', minQty: '', typePieces: '' }]);
+    const { token, refreshToken } = useAuthToken();
 
     // fetch List Services
     useEffect(() => {
         const fetchServicesList = async () => {
-            const response = await fetch(`${BACKEND}/products/services`);
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/services`);
             const result = await response.json();
             if (result.error === true) {
                 setAlert({ type: 'error', message: result.error });
@@ -118,7 +121,7 @@ export default function CreateProductPage() {
             }
         };
         fetchServicesList();
-    }, [setAlert]);
+    }, [setAlert, refreshToken, token]);
     const optionsService = servicesList.map((service) => ({
         value: service.barcode,
         label: service.name,
@@ -127,7 +130,7 @@ export default function CreateProductPage() {
     // fetch List Categories
     useEffect(() => {
         const fetchCategoriesList = async () => {
-            const response = await fetch(`${BACKEND}/products/categories`);
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/categories`);
             const result = await response.json();
             if (result.error === true) {
                 setAlert({ type: 'error', message: result.error });
@@ -137,7 +140,7 @@ export default function CreateProductPage() {
             }
         };
         fetchCategoriesList();
-    }, [setAlert]);
+    }, [setAlert, refreshToken, token]);
     const optionCategories = categoriesList.map((category) => ({
         value: category.id,
         label: category.name,
@@ -146,7 +149,7 @@ export default function CreateProductPage() {
     // fetch List Components
     useEffect(() => {
         const fetchComponentsList = async () => {
-            const response = await fetch(`${BACKEND}/products/components`);
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/components`);
             const result = await response.json();
             if (result.error === true) {
                 setAlert({ type: 'error', message: result.error });
@@ -312,7 +315,7 @@ export default function CreateProductPage() {
             setLoading(true);
             try {
                 await new Promise((resolve) => setTimeout(resolve, 2000));
-                const response = await fetch(`${BACKEND}/products`, {
+                const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products`, {
                     method: 'POST',
                     // headers: {
                     //     'Content-Type': 'multipart/form-data', // Set content type
@@ -334,7 +337,7 @@ export default function CreateProductPage() {
         }
     };
     return (
-        <>
+        <section className="relative py-8">
             <NavigationCard navCard={navCard} />
             <form onSubmit={submitCreateProduct} className="grid grid-cols-3 gap-5 items-start">
                 <Card className="col-span-2 rounded-tl-none">
@@ -668,6 +671,6 @@ export default function CreateProductPage() {
                     ))}
                 </div>
             </form>
-        </>
+        </section>
     );
 }

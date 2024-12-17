@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { BACKEND, formatDateTIme } from '../../../lib/utils';
+import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
 import { useRouter } from 'next/router';
@@ -9,6 +9,8 @@ import { IconSearch } from '@tabler/icons-react';
 import { ProductsTable } from '../../components/Table';
 import { Pagination } from '@/components/Pagination';
 import { Products } from '.';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 export default function DisabledProductsListPage() {
     const router = useRouter();
@@ -17,10 +19,11 @@ export default function DisabledProductsListPage() {
     const [limit, setLimit] = useState<number>(5);
     const [currentPage, setCurrentPage] = useState(1);
     const setAlert = useSetAtom(alertShow);
+    const { token, refreshToken } = useAuthToken();
 
     const fetchProducts = useCallback(async () => {
         try {
-            const response = await fetch(`${BACKEND}/products/disabled`);
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/disabled`);
             const result = await response.json();
 
             if (result.error === true) {
@@ -33,7 +36,7 @@ export default function DisabledProductsListPage() {
             setAlert({ type: 'error', message: `${error}` });
             router.push('/');
         }
-    }, [router, setAlert]);
+    }, [router, setAlert, token, refreshToken]);
 
     useEffect(() => {
         fetchProducts();
@@ -61,7 +64,7 @@ export default function DisabledProductsListPage() {
     };
 
     return (
-        <>
+        <section className="py-8 relative">
             <NavigationCard navCard={navCard} />
             <Card className="w-10/12 rounded-tl-none">
                 <div className="flex items-center justify-between mb-5">
@@ -97,6 +100,6 @@ export default function DisabledProductsListPage() {
                     <Pagination currentPage={currentPage} totalItems={filteredProducts.length} itemsPerPage={limit} onPageChange={handlePageChange} />
                 )}
             </Card>
-        </>
+        </section>
     );
 }

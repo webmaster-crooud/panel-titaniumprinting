@@ -1,7 +1,7 @@
 import React from 'react';
 import { DetailProducts } from '../../pages/products/[barcode]';
 
-import { formatDateTIme } from '../../../lib/utils';
+import { formatMoment } from '../../../lib/utils';
 import { ProductUpdateModal } from '../Modal/ProductUpdate.modal';
 import { ServicesCreateProductModal, ServicesDeletedProductModal, ServicesUpdateProductModal } from '../Modal/Services.modal';
 import { CategoriesCreateProductModal, CategoriesDeletedProductModal, CategoriesUpdateProductModal } from '../Modal/Categories.modal';
@@ -76,11 +76,11 @@ export const DetailProductTable: React.FC<propsDetailProductTable> = ({ product,
                         <td className="px-3 py-2">
                             <ul>
                                 <li className="flex items-center justify-between">
-                                    <span>Terpublikasi:</span> {formatDateTIme(product ? product.createdAt : new Date())}
+                                    <span>Terpublikasi:</span> {formatMoment(product ? product.createdAt : new Date()).format('DD MMMM YYYY')}
                                 </li>
                                 {product?.createdAt !== product?.updatedAt && (
                                     <li className="flex items-center justify-between">
-                                        <span>Pembaharuan:</span> {formatDateTIme(product ? product.updatedAt : new Date())}
+                                        <span>Pembaharuan:</span> {formatMoment(product ? product.updatedAt : new Date()).format('DD MMMM YYYY')}
                                     </li>
                                 )}
                             </ul>

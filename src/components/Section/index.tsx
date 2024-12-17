@@ -1,11 +1,13 @@
 import { Card } from '@/components/Card';
 import Image from 'next/image';
-import { DetailProducts } from '../[barcode]';
+import { DetailProducts } from '../../pages/products/[barcode]';
 import React, { useRef, useState } from 'react';
 import { IconLoader3, IconPlus, IconTransform, IconTrash, IconUpload, IconX } from '@tabler/icons-react';
 import { useSetAtom } from 'jotai';
-import { alertShow } from '../../../../store/Atom';
-import { BACKEND, PUBLIC } from '../../../../lib/utils';
+import { alertShow } from '../../../store/Atom';
+import { BACKEND, PUBLIC } from '../../../lib/utils';
+import { useAuthToken } from '../../../hooks/useAuthToken';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 
 type propsCoverImageProduct = {
     product?: DetailProducts;
@@ -22,6 +24,7 @@ const ImageProduct: React.FC<propsCoverImageProduct> = ({ product, barcode, fetc
     const [images, setImages] = useState<{ name: string; source: string }>({ name: '', source: '' });
     const [fileImages, setFileImages] = useState<{ file: File; name: string }>();
     const [imagesPreview, setImagesPreview] = useState<string>('');
+    const { token, refreshToken } = useAuthToken();
 
     const handleChangeImages = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -36,8 +39,8 @@ const ImageProduct: React.FC<propsCoverImageProduct> = ({ product, barcode, fetc
             }
 
             // Update cover and preview only after successful validation
-            setImages({ name: `${file.name} Images by Titanium Printing`, source: `images-${new Date().getTime()}-${file.name}` });
-            setFileImages({ file: file, name: `images-${new Date().getTime()}-${file.name}` });
+            setImages({ name: `${file.name} Images by Titanium Printing`, source: `images-${file.name}` });
+            setFileImages({ file: file, name: `images-${file.name}` });
             setImagesPreview(URL.createObjectURL(file));
         } else {
             // Handle cases where no file is selected (optional)
@@ -57,7 +60,7 @@ const ImageProduct: React.FC<propsCoverImageProduct> = ({ product, barcode, fetc
         setLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 2000));
-            const response = await fetch(`${BACKEND}/products/update/images/${barcode}/${id}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/update/images/${barcode}/${id}`, {
                 method: 'PATCH',
                 // headers: {
                 //     'Content-Type': 'multipart/form-data', // Set content type
@@ -83,7 +86,7 @@ const ImageProduct: React.FC<propsCoverImageProduct> = ({ product, barcode, fetc
         setLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 2000));
-            const response = await fetch(`${BACKEND}/products/delete/images/${barcode}/${id}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/delete/images/${barcode}/${id}`, {
                 method: 'DELETE',
             });
             const result = await response.json();
@@ -112,7 +115,7 @@ const ImageProduct: React.FC<propsCoverImageProduct> = ({ product, barcode, fetc
         setLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 2000));
-            const response = await fetch(`${BACKEND}/products/create/images/${barcode}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/create/images/${barcode}`, {
                 method: 'POST',
                 // headers: {
                 //     'Content-Type': 'multipart/form-data', // Set content type

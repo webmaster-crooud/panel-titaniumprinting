@@ -1,11 +1,13 @@
 import { Card } from '@/components/Card';
 import Image from 'next/image';
-import { DetailProducts } from '../[barcode]';
+import { DetailProducts } from '../../pages/products/[barcode]';
 import React, { useRef, useState } from 'react';
-import { BACKEND, PUBLIC } from '../../../../lib/utils';
+import { BACKEND, PUBLIC } from '../../../lib/utils';
 import { IconLoader3, IconPlus, IconTransform, IconUpload, IconX } from '@tabler/icons-react';
 import { useSetAtom } from 'jotai';
-import { alertShow } from '../../../../store/Atom';
+import { alertShow } from '../../../store/Atom';
+import { fetchWithAuth } from '../../../lib/fetchWithAuth';
+import { useAuthToken } from '../../../hooks/useAuthToken';
 
 type propsCoverImageProduct = {
     product?: DetailProducts;
@@ -22,6 +24,7 @@ const CoverImageProduct: React.FC<propsCoverImageProduct> = ({ product, barcode,
     const [cover, setCover] = useState<string | undefined>(product ? product.cover : undefined);
     const [fileCover, setFileCover] = useState<{ file: File; name: string }>();
     const [coverPreview, setCoverPreview] = useState<string>('');
+    const { token, refreshToken } = useAuthToken();
 
     const handleChangeCover = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -36,8 +39,8 @@ const CoverImageProduct: React.FC<propsCoverImageProduct> = ({ product, barcode,
             }
 
             // Update cover and preview only after successful validation
-            setCover(`cover-${new Date().getTime()}-${file.name}`);
-            setFileCover({ file: file, name: `cover-${new Date().getTime()}-${file.name}` });
+            setCover(`cover-${file.name}`);
+            setFileCover({ file: file, name: `cover-${file.name}` });
             setCoverPreview(URL.createObjectURL(file));
         } else {
             // Handle cases where no file is selected (optional)
@@ -63,7 +66,7 @@ const CoverImageProduct: React.FC<propsCoverImageProduct> = ({ product, barcode,
         setLoading(true);
         try {
             await new Promise((resolve) => setTimeout(resolve, 2000));
-            const response = await fetch(`${BACKEND}/products/update/cover/${barcode}`, {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/update/cover/${barcode}`, {
                 method: 'PATCH',
                 // headers: {
                 //     'Content-Type': 'multipart/form-data', // Set content type
@@ -84,6 +87,7 @@ const CoverImageProduct: React.FC<propsCoverImageProduct> = ({ product, barcode,
         }
     };
 
+    console.log(`${PUBLIC}/cover/${product?.cover}`);
     return (
         <Card>
             <div className="flex items-center justify-between mb-6">
