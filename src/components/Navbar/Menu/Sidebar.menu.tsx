@@ -27,6 +27,10 @@ const navMenu: propsSidebar[] = [
         ],
     },
     {
+        name: 'Promosi',
+        url: '/promotions',
+    },
+    {
         name: 'Produk',
         url: '/products',
     },
