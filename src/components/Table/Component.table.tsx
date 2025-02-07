@@ -15,23 +15,17 @@ export const ComponentProductTable: React.FC<propsComponentProductTable> = ({ pr
     return product?.product_component.map((data, index) => (
         <Card key={index}>
             <div className="flex items-center justify-end mb-5 gap-3">
-                <Tooltip title="Pengaturan Komponen" position="left" size="small" arrow>
-                    <button className="text-sky-500">
-                        <IconTransform size={18} stroke={2} />
-                    </button>
-                </Tooltip>
+                <button className="text-sky-500">
+                    <IconTransform size={18} stroke={2} />
+                </button>
 
-                <Tooltip title="Hapus Komponen" position="left" size="small" arrow>
-                    <button className="text-red-500">
-                        <IconTrash size={18} stroke={2} />
-                    </button>
-                </Tooltip>
+                <button className="text-red-500">
+                    <IconTrash size={18} stroke={2} />
+                </button>
 
-                <Tooltip title="Detail Komponen" position="left" size="small" arrow>
-                    <button type="button" onClick={() => router.push(`/components/${data.component.id}`)} className="text-cyan-500">
-                        <IconFolderOpen size={18} stroke={2} />
-                    </button>
-                </Tooltip>
+                <button type="button" onClick={() => router.push(`/components/${data.component.id}`)} className="text-cyan-500">
+                    <IconFolderOpen size={18} stroke={2} />
+                </button>
             </div>
             <table className="w-full table-auto">
                 <thead className="w-full text-sm bg-slate-500 text-white">

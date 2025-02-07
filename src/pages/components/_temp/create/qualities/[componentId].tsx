@@ -106,11 +106,9 @@ export default function CreateQualityPage() {
             <div className="flex items-center justify-between">
                 <h1 className="text-xl font-bold text-slate-800">Komponen &quot;{nameComponent}&quot;</h1>
                 <Link href={'/components'} className="px-3 py-2 text-sm font-semibold bg-red-600 text-slate-100 rounded-lg">
-                    <Tooltip title="List Komponen" arrow size="small" position="bottom">
-                        <div className="flex items-center justify-center gap-1">
-                            <IconArrowBack size={18} stroke={2.5} /> <span>Kembali</span>
-                        </div>
-                    </Tooltip>
+                    <div className="flex items-center justify-center gap-1">
+                        <IconArrowBack size={18} stroke={2.5} /> <span>Kembali</span>
+                    </div>
                 </Link>
             </div>
 

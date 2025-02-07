@@ -324,18 +324,17 @@ export default function DetailComponentPage() {
                                     <Card key={index} className="rounded-lg">
                                         <div className="flex items-center justify-end gap-2">
                                             <QualitiesUpdateModal data={quality} componentId={`${componentId}`} fetchComponents={fetchComponent} />
-                                            <Tooltip title="Hapus" size="small" position="left">
-                                                <button
-                                                    disabled={loading?.func === 'DeleteQuality'}
-                                                    onClick={() => handlerDeleteQuality(quality.id, index)}
-                                                >
-                                                    {loading?.func === 'DeleteQuality' && loading.idx === index ? (
-                                                        <IconLoader3 size={18} stroke={2} className="text-slate-800 animate-spin" />
-                                                    ) : (
-                                                        <IconTrash size={18} stroke={2} className="text-red-500" />
-                                                    )}
-                                                </button>
-                                            </Tooltip>
+
+                                            <button
+                                                disabled={loading?.func === 'DeleteQuality'}
+                                                onClick={() => handlerDeleteQuality(quality.id, index)}
+                                            >
+                                                {loading?.func === 'DeleteQuality' && loading.idx === index ? (
+                                                    <IconLoader3 size={18} stroke={2} className="text-slate-800 animate-spin" />
+                                                ) : (
+                                                    <IconTrash size={18} stroke={2} className="text-red-500" />
+                                                )}
+                                            </button>
                                         </div>
                                         <table className="w-full table-auto">
                                             <thead className="bg-slate-600 text-slate-100">
@@ -370,28 +369,21 @@ export default function DetailComponentPage() {
                                                                         <span>
                                                                             <div className="flex items-center justify-end gap-2">
                                                                                 <SizeUpdateModal sizeId={size.id} fetchSize={fetchComponent} />
-                                                                                <Tooltip title="Hapus" size="small" position="left">
-                                                                                    <button
-                                                                                        disabled={
-                                                                                            loading?.func === 'DeleteSize' && loading.idx === index
-                                                                                        }
-                                                                                        onClick={() => handlerDeleteSize(quality.id, size.id, index)}
-                                                                                    >
-                                                                                        {loading?.func === 'DeleteSize' && loading.idx === index ? (
-                                                                                            <IconLoader3
-                                                                                                size={16}
-                                                                                                stroke={2}
-                                                                                                className="text-slate-800 animate-spin"
-                                                                                            />
-                                                                                        ) : (
-                                                                                            <IconTrash
-                                                                                                size={16}
-                                                                                                stroke={2}
-                                                                                                className="text-red-500"
-                                                                                            />
-                                                                                        )}
-                                                                                    </button>
-                                                                                </Tooltip>
+
+                                                                                <button
+                                                                                    disabled={loading?.func === 'DeleteSize' && loading.idx === index}
+                                                                                    onClick={() => handlerDeleteSize(quality.id, size.id, index)}
+                                                                                >
+                                                                                    {loading?.func === 'DeleteSize' && loading.idx === index ? (
+                                                                                        <IconLoader3
+                                                                                            size={16}
+                                                                                            stroke={2}
+                                                                                            className="text-slate-800 animate-spin"
+                                                                                        />
+                                                                                    ) : (
+                                                                                        <IconTrash size={16} stroke={2} className="text-red-500" />
+                                                                                    )}
+                                                                                </button>
                                                                             </div>
                                                                         </span>
                                                                     </li>

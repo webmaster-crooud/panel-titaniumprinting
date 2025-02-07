@@ -187,74 +187,64 @@ const ServiceTable = ({ fetchService, services }: { fetchService: any; services:
                                     {pathname === '/services/disabled' ? null : loadingFav.status && loadingFav.barcode === service.barcode ? (
                                         <IconLoader3 size={16} stroke={2} className="animate-spin" />
                                     ) : (
-                                        <Tooltip title="Favorit" position="top" trigger="mouseenter" arrow size="small">
-                                            <button type="button">
-                                                {service.flag === 'FAVOURITE' ? (
-                                                    <IconStarFilled
-                                                        onClick={() => handlerFavourite(service.barcode)}
-                                                        size={16}
-                                                        stroke={2}
-                                                        className="text-yellow-500"
-                                                    />
-                                                ) : (
-                                                    <IconStar
-                                                        onClick={() => handlerFavourite(service.barcode)}
-                                                        size={16}
-                                                        stroke={2}
-                                                        className="text-yellow-500"
-                                                    />
-                                                )}
-                                            </button>
-                                        </Tooltip>
+                                        <button type="button">
+                                            {service.flag === 'FAVOURITE' ? (
+                                                <IconStarFilled
+                                                    onClick={() => handlerFavourite(service.barcode)}
+                                                    size={16}
+                                                    stroke={2}
+                                                    className="text-yellow-500"
+                                                />
+                                            ) : (
+                                                <IconStar
+                                                    onClick={() => handlerFavourite(service.barcode)}
+                                                    size={16}
+                                                    stroke={2}
+                                                    className="text-yellow-500"
+                                                />
+                                            )}
+                                        </button>
                                     )}
 
                                     {loadingDelete.status && loadingDelete.barcode === service.barcode ? (
                                         <IconLoader3 size={16} stroke={2} className="animate-spin" />
                                     ) : pathname === '/services/disabled' ? (
-                                        <Tooltip title="Aktif" position="top" trigger="mouseenter" arrow size="small">
-                                            <button type="button">
-                                                <IconEye
-                                                    onClick={() => handlerDeactived(service.barcode)}
-                                                    size={18}
-                                                    stroke={2}
-                                                    className="text-blue-600"
-                                                />
-                                            </button>
-                                        </Tooltip>
+                                        <button type="button">
+                                            <IconEye
+                                                onClick={() => handlerDeactived(service.barcode)}
+                                                size={18}
+                                                stroke={2}
+                                                className="text-blue-600"
+                                            />
+                                        </button>
                                     ) : (
-                                        <Tooltip title="Hapus" position="top" trigger="mouseenter" arrow size="small">
-                                            <button type="button">
-                                                <IconTrash
-                                                    onClick={() => handlerDeactived(service.barcode)}
-                                                    size={16}
-                                                    stroke={2}
-                                                    className="text-red-600"
-                                                />
-                                            </button>
-                                        </Tooltip>
+                                        <button type="button">
+                                            <IconTrash
+                                                onClick={() => handlerDeactived(service.barcode)}
+                                                size={16}
+                                                stroke={2}
+                                                className="text-red-600"
+                                            />
+                                        </button>
                                     )}
 
                                     {pathname === '/services/disabled' ? (
                                         loadingDelete.status && loadingDelete.barcode === service.barcode ? (
                                             <IconLoader3 size={16} stroke={2} className="animate-spin" />
                                         ) : (
-                                            <Tooltip title="Hapus" position="top" trigger="mouseenter" arrow size="small">
-                                                <button type="button">
-                                                    <IconTrash
-                                                        onClick={() => handlerDelete(service.barcode)}
-                                                        size={16}
-                                                        stroke={2}
-                                                        className="text-red-600"
-                                                    />
-                                                </button>
-                                            </Tooltip>
+                                            <button type="button">
+                                                <IconTrash
+                                                    onClick={() => handlerDelete(service.barcode)}
+                                                    size={16}
+                                                    stroke={2}
+                                                    className="text-red-600"
+                                                />
+                                            </button>
                                         )
                                     ) : (
-                                        <Tooltip title="Perbarui" position="top" trigger="mouseenter" arrow size="small">
-                                            <Link href={`/services/update/${service.barcode}`} type="button">
-                                                <IconTransform size={18} stroke={2} className="text-cyan-600" />
-                                            </Link>
-                                        </Tooltip>
+                                        <Link href={`/services/update/${service.barcode}`} type="button">
+                                            <IconTransform size={18} stroke={2} className="text-cyan-600" />
+                                        </Link>
                                     )}
                                 </div>
                             </td>

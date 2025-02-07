@@ -100,34 +100,28 @@ const ComponentsTable: React.FC<propsComponentsTable> = ({ components, type, fet
                                             <div className="flex items-center justify-center gap-2">
                                                 {data.flag === 'ACTIVED' && (
                                                     <>
-                                                        <Tooltip title="Pengaturan" size="small" arrow position="left">
-                                                            <button onClick={() => router.push(`/components/update/${data.id}`)}>
-                                                                <IconTransform size={18} stroke={2} className="text-sky-600" />
-                                                            </button>
-                                                        </Tooltip>
+                                                        <button onClick={() => router.push(`/components/update/${data.id}`)}>
+                                                            <IconTransform size={18} stroke={2} className="text-sky-600" />
+                                                        </button>
 
-                                                        <Tooltip title="Disabled" size="small" arrow position="left">
-                                                            <button
-                                                                disabled={loading?.func === 'changeStatus' && loading?.status}
-                                                                type="button"
-                                                                onClick={() => handlerChangeStatus(data.id)}
-                                                            >
-                                                                {loading?.func === 'changeStatus' && loading?.id === data.id ? (
-                                                                    <IconLoader3 size={17} stroke={2} className="text-sky-600 animate-spin" />
-                                                                ) : (
-                                                                    <IconTrash size={17} stroke={2} className="text-red-600" />
-                                                                )}
-                                                            </button>
-                                                        </Tooltip>
+                                                        <button
+                                                            disabled={loading?.func === 'changeStatus' && loading?.status}
+                                                            type="button"
+                                                            onClick={() => handlerChangeStatus(data.id)}
+                                                        >
+                                                            {loading?.func === 'changeStatus' && loading?.id === data.id ? (
+                                                                <IconLoader3 size={17} stroke={2} className="text-sky-600 animate-spin" />
+                                                            ) : (
+                                                                <IconTrash size={17} stroke={2} className="text-red-600" />
+                                                            )}
+                                                        </button>
                                                     </>
                                                 )}
                                                 {data.flag === 'FAVORITE' && (
                                                     <>
-                                                        <Tooltip title="Pengaturan" size="small" arrow position="left">
-                                                            <button onClick={() => router.push(`/components/update/${data.id}`)}>
-                                                                <IconTransform size={18} stroke={2} className="text-sky-600" />
-                                                            </button>
-                                                        </Tooltip>
+                                                        <button onClick={() => router.push(`/components/update/${data.id}`)}>
+                                                            <IconTransform size={18} stroke={2} className="text-sky-600" />
+                                                        </button>
 
                                                         <button
                                                             disabled={loading?.func === 'changeStatus' && loading?.status}
@@ -144,32 +138,25 @@ const ComponentsTable: React.FC<propsComponentsTable> = ({ components, type, fet
                                                 )}
                                                 {data.flag === 'DISABLED' && (
                                                     <>
-                                                        <Tooltip title="Publish" size="small" arrow position="left">
-                                                            <button
-                                                                type="button"
-                                                                disabled={loading?.func === 'changeStatus' && loading?.status}
-                                                                onClick={() => handlerChangeStatus(data.id)}
-                                                            >
-                                                                {loading?.func === 'changeStatus' && loading?.id === data.id ? (
-                                                                    <IconLoader3 size={17} stroke={2} className="text-sky-600 animate-spin" />
-                                                                ) : (
-                                                                    <IconCloudUpload size={18} stroke={2} className="text-sky-600" />
-                                                                )}
-                                                            </button>
-                                                        </Tooltip>
+                                                        <button
+                                                            type="button"
+                                                            disabled={loading?.func === 'changeStatus' && loading?.status}
+                                                            onClick={() => handlerChangeStatus(data.id)}
+                                                        >
+                                                            {loading?.func === 'changeStatus' && loading?.id === data.id ? (
+                                                                <IconLoader3 size={17} stroke={2} className="text-sky-600 animate-spin" />
+                                                            ) : (
+                                                                <IconCloudUpload size={18} stroke={2} className="text-sky-600" />
+                                                            )}
+                                                        </button>
 
-                                                        <Tooltip title="Hapus" size="small" arrow position="left">
-                                                            <button
-                                                                disabled={loading?.func === 'delete'}
-                                                                onClick={() => handlerDeleteComponent(data.id)}
-                                                            >
-                                                                {loading?.func === 'delete' && loading?.id === data.id ? (
-                                                                    <IconLoader3 size={17} stroke={2} className="text-sky-600 animate-spin" />
-                                                                ) : (
-                                                                    <IconTrash size={17} stroke={2} className="text-red-600" />
-                                                                )}
-                                                            </button>
-                                                        </Tooltip>
+                                                        <button disabled={loading?.func === 'delete'} onClick={() => handlerDeleteComponent(data.id)}>
+                                                            {loading?.func === 'delete' && loading?.id === data.id ? (
+                                                                <IconLoader3 size={17} stroke={2} className="text-sky-600 animate-spin" />
+                                                            ) : (
+                                                                <IconTrash size={17} stroke={2} className="text-red-600" />
+                                                            )}
+                                                        </button>
                                                     </>
                                                 )}
                                             </div>

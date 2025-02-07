@@ -145,40 +145,34 @@ export const ProductsTable: React.FC<propsProductsTable> = ({ products, filtered
                                     <div className="flex items-center justify-center gap-1">
                                         {product.flag === 'FAVOURITE' && (
                                             <>
-                                                <Tooltip title="Favorit" size="small" position="left">
-                                                    <button
-                                                        type="button"
-                                                        disabled={loading?.func === 'favourite'}
-                                                        onClick={() => handleFavouriteProducts(product.barcode, index)}
-                                                        className="text-yellow-500"
-                                                    >
-                                                        {loading?.func === 'favourite' && loading.idx === index ? (
-                                                            <IconLoader3 className="animate-spin" size={17} stroke={2} />
-                                                        ) : (
-                                                            <IconStarFilled size={17} stroke={2} />
-                                                        )}
-                                                    </button>
-                                                </Tooltip>
+                                                <button
+                                                    type="button"
+                                                    disabled={loading?.func === 'favourite'}
+                                                    onClick={() => handleFavouriteProducts(product.barcode, index)}
+                                                    className="text-yellow-500"
+                                                >
+                                                    {loading?.func === 'favourite' && loading.idx === index ? (
+                                                        <IconLoader3 className="animate-spin" size={17} stroke={2} />
+                                                    ) : (
+                                                        <IconStarFilled size={17} stroke={2} />
+                                                    )}
+                                                </button>
 
-                                                <Tooltip title="Disabled" size="small" position="left">
-                                                    <button
-                                                        onClick={() => handlerChangeFlag(product.barcode, index)}
-                                                        disabled={loading?.func === 'changeFlag'}
-                                                        className="text-red-500 mt-0.5"
-                                                    >
-                                                        {loading?.func === 'changeFlag' && loading.idx === index ? (
-                                                            <IconLoader3 size={17} stroke={2} className="animate-spin" />
-                                                        ) : (
-                                                            <IconEyeOff size={17} stroke={2} />
-                                                        )}
-                                                    </button>
-                                                </Tooltip>
+                                                <button
+                                                    onClick={() => handlerChangeFlag(product.barcode, index)}
+                                                    disabled={loading?.func === 'changeFlag'}
+                                                    className="text-red-500 mt-0.5"
+                                                >
+                                                    {loading?.func === 'changeFlag' && loading.idx === index ? (
+                                                        <IconLoader3 size={17} stroke={2} className="animate-spin" />
+                                                    ) : (
+                                                        <IconEyeOff size={17} stroke={2} />
+                                                    )}
+                                                </button>
 
-                                                <Tooltip title="Detail" size="small" position="left">
-                                                    <Link href={`/products/${product.barcode}`} className="text-sky-500 mt-1.5">
-                                                        <IconFolderOpen size={17} stroke={2} />
-                                                    </Link>
-                                                </Tooltip>
+                                                <Link href={`/products/${product.barcode}`} className="text-sky-500 mt-1.5">
+                                                    <IconFolderOpen size={17} stroke={2} />
+                                                </Link>
                                             </>
                                         )}
                                         {product.flag === 'ACTIVED' && (
@@ -196,56 +190,49 @@ export const ProductsTable: React.FC<propsProductsTable> = ({ products, filtered
                                                     )}
                                                 </button>
 
-                                                <Tooltip title="Disabled" size="small" position="left">
-                                                    <button
-                                                        onClick={() => handlerChangeFlag(product.barcode, index)}
-                                                        disabled={loading?.func === 'changeFlag'}
-                                                        className="text-red-500 mt-0.5"
-                                                    >
-                                                        {loading?.func === 'changeFlag' && loading.idx === index ? (
-                                                            <IconLoader3 size={17} stroke={2} className="animate-spin" />
-                                                        ) : (
-                                                            <IconEyeOff size={17} stroke={2} />
-                                                        )}
-                                                    </button>
-                                                </Tooltip>
-                                                <Tooltip title="Detail" size="small" position="left">
-                                                    <Link href={`/products/${product.barcode}`} className="text-sky-500 mt-1.5">
-                                                        <IconFolderOpen size={17} stroke={2} />
-                                                    </Link>
-                                                </Tooltip>
+                                                <button
+                                                    onClick={() => handlerChangeFlag(product.barcode, index)}
+                                                    disabled={loading?.func === 'changeFlag'}
+                                                    className="text-red-500 mt-0.5"
+                                                >
+                                                    {loading?.func === 'changeFlag' && loading.idx === index ? (
+                                                        <IconLoader3 size={17} stroke={2} className="animate-spin" />
+                                                    ) : (
+                                                        <IconEyeOff size={17} stroke={2} />
+                                                    )}
+                                                </button>
+
+                                                <Link href={`/products/${product.barcode}`} className="text-sky-500 mt-1.5">
+                                                    <IconFolderOpen size={17} stroke={2} />
+                                                </Link>
                                             </>
                                         )}
 
                                         {product.flag === 'DISABLED' && (
                                             <>
-                                                <Tooltip title="Publish" size="small" position="left">
-                                                    <button
-                                                        onClick={() => handlerChangeFlag(product.barcode, index)}
-                                                        disabled={loading?.func === 'changeFlag'}
-                                                        className="text-sky-500 mt-0.5"
-                                                    >
-                                                        {loading?.func === 'changeFlag' && loading.idx === index ? (
-                                                            <IconLoader3 size={18} stroke={2} className="animate-spin" />
-                                                        ) : (
-                                                            <IconCloudUpload size={18} stroke={2} />
-                                                        )}
-                                                    </button>
-                                                </Tooltip>
+                                                <button
+                                                    onClick={() => handlerChangeFlag(product.barcode, index)}
+                                                    disabled={loading?.func === 'changeFlag'}
+                                                    className="text-sky-500 mt-0.5"
+                                                >
+                                                    {loading?.func === 'changeFlag' && loading.idx === index ? (
+                                                        <IconLoader3 size={18} stroke={2} className="animate-spin" />
+                                                    ) : (
+                                                        <IconCloudUpload size={18} stroke={2} />
+                                                    )}
+                                                </button>
 
-                                                <Tooltip title="Hapus" size="small" position="left">
-                                                    <button
-                                                        onClick={() => handlerDeleteProducts(product.barcode, index)}
-                                                        disabled={loading?.func === 'delete'}
-                                                        className="text-red-500 mt-0.5"
-                                                    >
-                                                        {loading?.func === 'delete' && loading.idx === index ? (
-                                                            <IconLoader3 size={17} stroke={2} className="animate-spin" />
-                                                        ) : (
-                                                            <IconTrash size={17} stroke={2} />
-                                                        )}
-                                                    </button>
-                                                </Tooltip>
+                                                <button
+                                                    onClick={() => handlerDeleteProducts(product.barcode, index)}
+                                                    disabled={loading?.func === 'delete'}
+                                                    className="text-red-500 mt-0.5"
+                                                >
+                                                    {loading?.func === 'delete' && loading.idx === index ? (
+                                                        <IconLoader3 size={17} stroke={2} className="animate-spin" />
+                                                    ) : (
+                                                        <IconTrash size={17} stroke={2} />
+                                                    )}
+                                                </button>
                                             </>
                                         )}
                                     </div>

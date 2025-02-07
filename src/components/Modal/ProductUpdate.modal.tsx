@@ -53,11 +53,9 @@ export const ProductUpdateModal: React.FC<propsProductUpdateModal> = ({ product,
     };
     return (
         <>
-            <Tooltip title="Perubahan" size="small" position="top" arrow>
-                <button className="text-blue-500 mt-1.5" onClick={() => setOpenModal(true)}>
-                    <IconTransform size={17} stroke={2} />
-                </button>
-            </Tooltip>
+            <button className="text-blue-500 mt-1.5" onClick={() => setOpenModal(true)}>
+                <IconTransform size={17} stroke={2} />
+            </button>
 
             {/* Modal */}
             {openModal && (

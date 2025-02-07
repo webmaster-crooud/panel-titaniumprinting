@@ -83,11 +83,9 @@ export const CategoriesUpdateProductModal: React.FC<propsCategoriesProductModal>
     };
     return (
         <>
-            <Tooltip title="Perubahan" size="small" position="top" arrow>
-                <button className="text-blue-500" type="button" onClick={() => setModal(true)}>
-                    <IconTransform size={17} stroke={2} />
-                </button>
-            </Tooltip>
+            <button className="text-blue-500" type="button" onClick={() => setModal(true)}>
+                <IconTransform size={17} stroke={2} />
+            </button>
 
             {/* Update Modal */}
             {modal && (
@@ -307,11 +305,9 @@ export const CategoriesDeletedProductModal: React.FC<propsCategoriesProductModal
 
     return (
         <>
-            <Tooltip title="Hapus" size="small" position="top" arrow>
-                <button className="text-red-500" type="button" onClick={() => setModalDelete(true)}>
-                    <IconTrash size={16} stroke={2} />
-                </button>
-            </Tooltip>
+            <button className="text-red-500" type="button" onClick={() => setModalDelete(true)}>
+                <IconTrash size={16} stroke={2} />
+            </button>
 
             {/* Modal */}
             {modalDelete && (

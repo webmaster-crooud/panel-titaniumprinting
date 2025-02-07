@@ -54,11 +54,9 @@ const QualitiesUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data, compo
 
     return (
         <>
-            <Tooltip title="Pengaturan" size="small" position="left">
-                <button onClick={() => setModal({ func: 'qualities', id: data.id })}>
-                    <IconTransform size={16} stroke={2} className="text-sky-500" />
-                </button>
-            </Tooltip>
+            <button onClick={() => setModal({ func: 'qualities', id: data.id })}>
+                <IconTransform size={16} stroke={2} className="text-sky-500" />
+            </button>
 
             {/* Modal */}
             {modal?.func === 'qualities' && modal.id === data.id && (

@@ -100,17 +100,15 @@ export const SizeUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ sizeId, f
 
     return (
         <>
-            <Tooltip title="Pengaturan" size="small" arrow position="top">
-                <button
-                    type="button"
-                    onClick={() => {
-                        setModal({ sizeId });
-                        fetchDetailSize();
-                    }}
-                >
-                    <IconAdjustmentsCog stroke={2} size={18} className="text-blue-700 mt-1.5" />
-                </button>
-            </Tooltip>
+            <button
+                type="button"
+                onClick={() => {
+                    setModal({ sizeId });
+                    fetchDetailSize();
+                }}
+            >
+                <IconAdjustmentsCog stroke={2} size={18} className="text-blue-700 mt-1.5" />
+            </button>
 
             {/* Modal */}
 

@@ -121,26 +121,23 @@ const CategoriesTable = ({
                             <td className="pe-2">
                                 {category.flag === 'ACTIVED' ? (
                                     <div className="flex items-center justify-center gap-2">
-                                        <Tooltip title="Pengaturan" position="top" trigger="mouseenter" arrow size="small">
-                                            {update?.status && update?.id === category.id ? (
-                                                <button type="button" onClick={() => setUpdate(undefined)}>
-                                                    <IconX size={20} stroke={2} className="text-red-600" />
-                                                </button>
-                                            ) : (
-                                                <button type="button" onClick={() => handlerUpdate(category.id, category.name)}>
-                                                    <IconTransform size={20} stroke={2} className="text-blue-600" />
-                                                </button>
-                                            )}
-                                        </Tooltip>
-                                        <Tooltip title="Disabled" position="top" trigger="mouseenter" arrow size="small">
-                                            <button onClick={() => handleDisabledCategory(category.id)}>
-                                                {loadingDisabled?.id === category.id ? (
-                                                    <IconLoader3 size={20} stroke={2} className="animate-spin text-slate-800" />
-                                                ) : (
-                                                    <IconEyeOff size={20} stroke={2} className="text-red-600" />
-                                                )}
+                                        {update?.status && update?.id === category.id ? (
+                                            <button type="button" onClick={() => setUpdate(undefined)}>
+                                                <IconX size={20} stroke={2} className="text-red-600" />
                                             </button>
-                                        </Tooltip>
+                                        ) : (
+                                            <button type="button" onClick={() => handlerUpdate(category.id, category.name)}>
+                                                <IconTransform size={20} stroke={2} className="text-blue-600" />
+                                            </button>
+                                        )}
+
+                                        <button onClick={() => handleDisabledCategory(category.id)}>
+                                            {loadingDisabled?.id === category.id ? (
+                                                <IconLoader3 size={20} stroke={2} className="animate-spin text-slate-800" />
+                                            ) : (
+                                                <IconEyeOff size={20} stroke={2} className="text-red-600" />
+                                            )}
+                                        </button>
                                     </div>
                                 ) : (
                                     <div className="flex items-center justify-center gap-2">
@@ -148,18 +145,14 @@ const CategoriesTable = ({
                                             {loadingDisabled?.id === category.id ? (
                                                 <IconLoader3 size={18} stroke={2} className="animate-spin text-slate-800" />
                                             ) : (
-                                                <Tooltip title="Disabled" position="top" trigger="mouseenter" arrow size="small">
-                                                    <IconCloudUpload size={20} stroke={2} className="text-blue-600" />
-                                                </Tooltip>
+                                                <IconCloudUpload size={20} stroke={2} className="text-blue-600" />
                                             )}
                                         </button>
                                         <button onClick={() => handleDeletedCategory(category.id)}>
                                             {loadingDeleted?.id === category.id ? (
                                                 <IconLoader3 size={18} stroke={2} className="animate-spin text-slate-800" />
                                             ) : (
-                                                <Tooltip title="Hapus" position="top" trigger="mouseenter" arrow size="small">
-                                                    <IconTrash size={18} stroke={2} className="text-red-600" />
-                                                </Tooltip>
+                                                <IconTrash size={18} stroke={2} className="text-red-600" />
                                             )}
                                         </button>
                                     </div>

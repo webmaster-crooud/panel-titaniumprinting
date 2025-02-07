@@ -83,11 +83,9 @@ export const ServicesUpdateProductModal: React.FC<propsServicesProductModal> = (
     };
     return (
         <>
-            <Tooltip title="Perubahan" size="small" position="top" arrow>
-                <button className="text-blue-500" type="button" onClick={() => setModal(true)}>
-                    <IconTransform size={17} stroke={2} />
-                </button>
-            </Tooltip>
+            <button className="text-blue-500" type="button" onClick={() => setModal(true)}>
+                <IconTransform size={17} stroke={2} />
+            </button>
 
             {/* Update Modal */}
             {modal && (
