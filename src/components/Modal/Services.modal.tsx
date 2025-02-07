@@ -1,6 +1,6 @@
 import { IconCheck, IconCirclePlus, IconLoader3, IconTransform, IconTrash, IconUpload, IconX } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
-import { Tooltip } from 'react-tippy';
+
 import { Card } from '@/components/Card';
 import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';
@@ -302,11 +302,9 @@ export const ServicesDeletedProductModal: React.FC<propsServicesProductModal> = 
 
     return (
         <>
-            <Tooltip title="Hapus" size="small" position="top" arrow>
-                <button className="text-red-500" type="button" onClick={() => setModalDelete(true)}>
-                    <IconTrash size={16} stroke={2} />
-                </button>
-            </Tooltip>
+            <button className="text-red-500" type="button" onClick={() => setModalDelete(true)}>
+                <IconTrash size={16} stroke={2} />
+            </button>
 
             {/* Modal */}
             {modalDelete && (

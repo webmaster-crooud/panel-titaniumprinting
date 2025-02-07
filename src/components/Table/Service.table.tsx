@@ -2,7 +2,7 @@
 import { IconActivity, IconEye, IconTransform, IconLoader3, IconSearch, IconStar, IconStarFilled, IconTrash, IconX } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import 'react-tippy/dist/tippy.css';
-import { Tooltip } from 'react-tippy';
+
 import { Pagination } from '../Pagination';
 import { DataService } from '../../pages/services';
 

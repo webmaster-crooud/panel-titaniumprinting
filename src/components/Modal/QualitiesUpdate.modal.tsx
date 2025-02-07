@@ -1,5 +1,5 @@
 import { IconTransform, IconLoader3, IconX } from '@tabler/icons-react';
-import { Tooltip } from 'react-tippy';
+
 import { Card } from '@/components/Card';
 import React, { useState } from 'react';
 import { BACKEND } from '../../../lib/utils';

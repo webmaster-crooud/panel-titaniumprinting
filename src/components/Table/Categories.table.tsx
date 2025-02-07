@@ -12,7 +12,7 @@ import {
 import { DataCategories } from '../../pages/categories';
 import React, { useState } from 'react';
 import 'react-tippy/dist/tippy.css';
-import { Tooltip } from 'react-tippy';
+
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
 import { BACKEND } from '../../../lib/utils';

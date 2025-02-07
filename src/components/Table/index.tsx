@@ -11,7 +11,7 @@ import {
     IconTrash,
 } from '@tabler/icons-react';
 import Link from 'next/link';
-import { Tooltip } from 'react-tippy';
+
 import { BACKEND, formatMoment } from '../../../lib/utils';
 import { Products } from '../../pages/products';
 import React, { useState } from 'react';

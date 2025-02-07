@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSetAtom } from 'jotai';
 import Link from 'next/link';
 import { IconArrowBack, IconCirclePlus, IconLoader3, IconX } from '@tabler/icons-react';
-import { Tooltip } from 'react-tippy';
+
 import { Card } from '@/components/Card';
 import CurrencyInput from 'react-currency-input-field';
 import { BACKEND } from '../../../../../../lib/utils';

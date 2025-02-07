@@ -1,6 +1,6 @@
 import { IconCheck, IconCirclePlus, IconLoader3, IconTransform, IconTrash, IconUpload, IconX } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
-import { Tooltip } from 'react-tippy';
+
 import { Card } from '@/components/Card';
 import { BACKEND } from '../../../lib/utils';
 import { useSetAtom } from 'jotai';

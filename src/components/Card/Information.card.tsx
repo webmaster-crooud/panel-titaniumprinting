@@ -1,5 +1,4 @@
 import React from 'react';
-import { Tooltip } from 'react-tippy';
 
 type propsInformationCard = {
     title: string;
@@ -20,8 +19,6 @@ export const InformationCard: React.FC<propsInformationCard> = ({ title, icon, b
                     {icon}
                     <span className="sr-only">{title}</span>
                 </h3>
-
-                <Tooltip title={`${title}`} arrow position="right" />
             </div>
 
             <div className="pt-5">

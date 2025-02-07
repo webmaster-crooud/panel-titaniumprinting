@@ -1,5 +1,5 @@
 import { IconAdjustmentsCog, IconCloudUpload, IconLoader3, IconX } from '@tabler/icons-react';
-import { Size, Tooltip } from 'react-tippy';
+
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';

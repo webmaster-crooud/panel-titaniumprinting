@@ -1,7 +1,7 @@
 import React from 'react';
 import { DetailProducts } from '../../pages/products/[barcode]';
 import { Card } from '@/components/Card';
-import { Tooltip } from 'react-tippy';
+
 import { IconFolderOpen, IconTransform, IconTrash } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
 

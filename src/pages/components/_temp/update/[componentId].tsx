@@ -8,7 +8,7 @@ import { Card } from '@/components/Card';
 import { IconArrowBack, IconCheck, IconCirclePlus, IconEye, IconTransform, IconLoader3, IconTrash, IconX } from '@tabler/icons-react';
 import Link from 'next/link';
 import CurrencyInput from 'react-currency-input-field';
-import { Tooltip } from 'react-tippy';
+
 import { alertShow } from '../../../../../store/Atom';
 import { BACKEND } from '../../../../../lib/utils';
 import QualitiesUpdateModal from '@/components/Modal/QualitiesUpdate.modal';

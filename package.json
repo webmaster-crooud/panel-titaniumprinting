@@ -19,7 +19,6 @@
         "react-currency-input-field": "^3.8.0",
         "react-dom": "^18",
         "react-select": "^5.8.2",
-        "react-tippy": "^1.4.0",
         "tailwindcss-animated": "^1.1.2"
     },
     "devDependencies": {

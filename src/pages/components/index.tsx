@@ -8,7 +8,6 @@ import { alertShow } from '../../../store/Atom';
 import { fetchWithAuth } from '../../../lib/fetchWithAuth';
 import { BACKEND, formatMoment } from '../../../lib/utils';
 import { Loader } from '@/components/Loader';
-import { Size, Tooltip } from 'react-tippy';
 import { SizeCreateModal } from '@/components/Modal/SizeCreate.modal';
 import { SizeUpdateModal } from '@/components/Modal/SizeUpdate.modal';
 
@@ -155,21 +154,18 @@ export default function ComponentListPage() {
                                     )}
                                 </td>
                                 <td className="font-medium px-3 py-2 flex items-center justify-center gap-2">
-                                    <Tooltip title="Pengaturan" size="small" arrow position="top">
-                                        <Link href={`/components/${component.id}`}>
-                                            <IconEye stroke={2} size={18} className="text-blue-700" />
-                                        </Link>
-                                    </Tooltip>
-                                    <Tooltip title="Pengaturan" size="small" arrow position="top">
-                                        <button
-                                            type="button"
-                                            className="mt-1.5"
-                                            typeof="button"
-                                            onClick={() => handlerDeletedComponent(Number(component.id))}
-                                        >
-                                            <IconTrash className="text-red-700" stroke={2} size={18} />
-                                        </button>
-                                    </Tooltip>
+                                    <Link href={`/components/${component.id}`}>
+                                        <IconEye stroke={2} size={18} className="text-blue-700" />
+                                    </Link>
+
+                                    <button
+                                        type="button"
+                                        className="mt-1.5"
+                                        typeof="button"
+                                        onClick={() => handlerDeletedComponent(Number(component.id))}
+                                    >
+                                        <IconTrash className="text-red-700" stroke={2} size={18} />
+                                    </button>
                                 </td>
                                 <td className="text-end">{formatMoment(component.createdAt).format('DD MMMM YYYY')}</td>
                             </tr>
@@ -223,11 +219,10 @@ export default function ComponentListPage() {
                                     <td className="text-start font-medium px-3 py-2">{size.name}</td>
                                     <td className="font-medium px-3 py-2 flex items-center justify-center gap-2">
                                         <SizeUpdateModal fetchSize={fetchSize} sizeId={size.id} />
-                                        <Tooltip title="Hapus" size="small" arrow position="top">
-                                            <button type="button" className="mt-1.5">
-                                                <IconTrash className="text-red-700" stroke={2} size={18} />
-                                            </button>
-                                        </Tooltip>
+
+                                        <button type="button" className="mt-1.5">
+                                            <IconTrash className="text-red-700" stroke={2} size={18} />
+                                        </button>
                                     </td>
                                 </tr>
                             ))}

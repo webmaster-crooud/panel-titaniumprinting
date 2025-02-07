@@ -1,6 +1,6 @@
 import { IconLoader3, IconTransform, IconUpload, IconX } from '@tabler/icons-react';
 import React, { useState } from 'react';
-import { Tooltip } from 'react-tippy';
+
 import { DetailProducts } from '../../pages/products/[barcode]';
 import { Card } from '@/components/Card';
 import { useSetAtom } from 'jotai';
