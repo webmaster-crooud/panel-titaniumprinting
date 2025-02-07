@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import { useSetAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import { authAccount } from '../store/Atom';
-interface Decoded {
+export interface Decoded {
     email: string;
     firstName: string;
     lastName: string;

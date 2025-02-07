@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtDecode } from 'jwt-decode';
+import { Decoded } from '../hooks/useAuthToken';
 
 export function middleware(request: NextRequest) {
     // Ambil token dari cookies
@@ -16,12 +17,17 @@ export function middleware(request: NextRequest) {
     try {
         // Contoh verifikasi sederhana (Anda perlu implementasi yang lebih kompleks)
 
-        const decoded = jwtDecode(token);
+        const decoded: Decoded = jwtDecode(token);
 
+        console.log(decoded);
         // Cek apakah token sudah expired
         if (decoded.exp && decoded.exp < Date.now() / 1000) {
             return NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/login`, request.url));
         }
+
+        // if (decoded.role === 'MEMBER' || 'CUSTOMER') {
+        //     return NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/users/${decoded.email}`, request.url));
+        // }
 
         return NextResponse.next();
     } catch (error) {

@@ -7,6 +7,7 @@ import { formatMoment } from '../../../lib/utils';
 
 export const Header = () => {
     const auth = useAtomValue(authAccount);
+    console.log(auth);
     const [date, setDate] = useState<{ day: string; dayName: string; month: string }>({ day: '', dayName: '', month: '' });
     useEffect(() => {
         setDate({
