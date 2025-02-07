@@ -100,7 +100,7 @@ const QualitiesUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data, compo
                                         >
                                             Orientasi?
                                         </label>
-                                        <div className="flex items-center justify-start gap-5">
+                                        {/* <div className="flex items-center justify-start gap-5">
                                             <div className="flex items-center">
                                                 <input
                                                     id="checked-checkbox"
@@ -127,7 +127,7 @@ const QualitiesUpdateModal: React.FC<propsQualitiesUpdateModal> = ({ data, compo
                                                     Tidak
                                                 </label>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
 

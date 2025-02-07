@@ -3,11 +3,12 @@ import { IconArrowBack, IconCloudUp, IconLoader3 } from '@tabler/icons-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
-import { BACKEND, formatCurrency } from '../../../../lib/utils';
-import ComponentsModal from '../../../components/Modal/Components.modal';
+
 import { useSetAtom } from 'jotai';
-import { alertShow } from '../../../../store/Atom';
 import { useRouter } from 'next/router';
+import { alertShow } from '../../../../../store/Atom';
+import { BACKEND, formatCurrency } from '../../../../../lib/utils';
+import ComponentsModal from '@/components/Modal/Components.modal';
 
 export default function CreateComponentPage() {
     const router = useRouter();

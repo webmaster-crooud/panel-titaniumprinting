@@ -1,17 +1,47 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
-import { BACKEND } from '../../../../lib/utils';
+
 import { useSetAtom } from 'jotai';
-import { alertShow } from '../../../../store/Atom';
+
 import { Card } from '@/components/Card';
-import { Component } from '../_temp';
+
 import { IconArrowBack, IconCheck, IconCirclePlus, IconEye, IconTransform, IconLoader3, IconTrash, IconX } from '@tabler/icons-react';
 import Link from 'next/link';
 import CurrencyInput from 'react-currency-input-field';
 import { Tooltip } from 'react-tippy';
-import QualitiesUpdateModal from '../../../components/Modal/QualitiesUpdate.modal';
-import SizeUpdateModal from '../../../components/Modal/SizeUpdate.modal';
-
+import { alertShow } from '../../../../../store/Atom';
+import { BACKEND } from '../../../../../lib/utils';
+import QualitiesUpdateModal from '@/components/Modal/QualitiesUpdate.modal';
+import { SizeUpdateModal } from '@/components/Modal/SizeUpdate.modal';
+enum TYPECOMPONENT {
+    MATERIAL,
+    ADDON,
+    FINISHING,
+    PROCESSING,
+    CONSUMING,
+}
+export interface Component {
+    id: string | undefined;
+    name: string | undefined;
+    flag: string | undefined;
+    typeComponent: string | undefined;
+    createdAt: Date | undefined;
+    updatedAt: Date | undefined;
+    qualities: {
+        id: number | string;
+        name: string;
+        orientation: boolean;
+        sizes: {
+            id: number;
+            width: number;
+            height: number;
+            length: number;
+            weight: number;
+            price: number;
+            cogs: number;
+        }[];
+    }[];
+}
 const COMPONENT_TYPES = [
     { value: 'MATERIAL', label: 'Material' },
     { value: 'ADDON', label: 'Addons' },
@@ -339,11 +369,7 @@ export default function DetailComponentPage() {
                                                                         <b>Data</b>
                                                                         <span>
                                                                             <div className="flex items-center justify-end gap-2">
-                                                                                <SizeUpdateModal
-                                                                                    data={size}
-                                                                                    qualityId={quality.id}
-                                                                                    fetchComponents={fetchComponent}
-                                                                                />
+                                                                                <SizeUpdateModal sizeId={size.id} fetchSize={fetchComponent} />
                                                                                 <Tooltip title="Hapus" size="small" position="left">
                                                                                     <button
                                                                                         disabled={
