@@ -4,9 +4,8 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                protocol: 'http', // atau 'https' sesuai protocol backend Anda
-                hostname: 'localhost', // sesuaikan dengan hostname backend Anda
-                port: '3001', // sesuaikan dengan port backend Anda
+                protocol: 'https', // atau 'https' sesuai protocol backend Anda
+                hostname: 'api.titaniumprint.id', // sesuaikan dengan hostname backend Anda
                 pathname: '/public/**', // mengizinkan akses ke semua file di folder public
             },
             // Jika Anda juga perlu akses ke assets.example.com
