@@ -11,7 +11,6 @@ import {
 } from '@tabler/icons-react';
 import { DataCategories } from '../../pages/categories';
 import React, { useState } from 'react';
-import ;
 
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
