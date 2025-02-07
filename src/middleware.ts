@@ -1,78 +1,45 @@
+// middleware.ts di root project
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtDecode } from 'jwt-decode';
-
-interface Decoded {
-    exp?: number;
-    role?: string;
-    email?: string;
-}
+import { Decoded } from '../hooks/useAuthToken';
 
 export function middleware(request: NextRequest) {
-    if (request.method === 'OPTIONS') {
-        return NextResponse.next();
+    // Ambil token dari cookies
+    const token = request.cookies.get('refreshToken')?.value;
+
+    // Jika tidak ada token, redirect ke login
+    if (!token) {
+        return NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/login`, request.url));
     }
 
+    // Verifikasi token (tambahkan logika verifikasi jwt di sini)
     try {
-        const tokenCookie = request.cookies.get('refreshToken');
+        // Contoh verifikasi sederhana (Anda perlu implementasi yang lebih kompleks)
 
-        if (!tokenCookie || typeof tokenCookie.value !== 'string') {
-            throw new Error('No valid token found');
+        const decoded: Decoded = jwtDecode(token);
+
+        console.log(decoded);
+        // Cek apakah token sudah expired
+        if (decoded.exp && decoded.exp < Date.now() / 1000) {
+            return NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/login`, request.url));
         }
 
-        if (!tokenCookie.value.startsWith('ey')) {
-            throw new Error('Invalid token format');
-        }
+        // if (decoded.role === 'MEMBER' || 'CUSTOMER') {
+        //     return NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/users/${decoded.email}`, request.url));
+        // }
 
-        const token: string = tokenCookie.value;
-
-        try {
-            const decoded = jwtDecode<Decoded>(token);
-
-            if (!decoded || typeof decoded !== 'object') {
-                throw new Error('Invalid token structure');
-            }
-
-            const currentTime = Math.floor(Date.now() / 1000);
-            if (decoded.exp && decoded.exp <= currentTime) {
-                throw new Error('Token expired');
-            }
-
-            const requestHeaders = new Headers(request.headers);
-            if (decoded.role) requestHeaders.set('x-user-role', decoded.role);
-            if (decoded.email) requestHeaders.set('x-user-email', decoded.email);
-
-            return NextResponse.next({
-                request: {
-                    headers: requestHeaders,
-                },
-            });
-        } catch (decodeError) {
-            console.error('Token decode error:', decodeError);
-            throw new Error('Failed to decode token');
-        }
+        return NextResponse.next();
     } catch (error) {
-        // Create the response first
-        const response = NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/login`, request.url));
-
-        // Delete the cookie using the type-safe approach
-        // Method 1: Using just the name
-        response.cookies.delete('refreshToken');
-
-        // Method 2: If you need to specify options, set an empty cookie with immediate expiration
-        response.cookies.set('refreshToken', '', {
-            path: '/',
-            domain: '.titaniumprint.id',
-            secure: true,
-            httpOnly: true,
-            maxAge: 0, // This makes the cookie expire immediately
-            sameSite: 'lax',
-        });
-
-        return response;
+        // Token tidak valid
+        return NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/login`, request.url));
     }
 }
 
+// Konfigurasi matcher untuk middleware
 export const config = {
-    matcher: ['/((?!api|_next/static|_next/image|favicon.ico|login|public).*)'],
+    matcher: [
+        // Semua route yang ingin di-protect
+        '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    ],
 };
