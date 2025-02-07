@@ -11,7 +11,7 @@ import {
 } from '@tabler/icons-react';
 import { DataCategories } from '../../pages/categories';
 import React, { useState } from 'react';
-import 'react-tippy/dist/tippy.css';
+import ;
 
 import { useSetAtom } from 'jotai';
 import { alertShow } from '../../../store/Atom';
