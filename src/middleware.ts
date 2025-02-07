@@ -1,45 +1,53 @@
-// middleware.ts di root project
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtDecode } from 'jwt-decode';
 import { Decoded } from '../hooks/useAuthToken';
 
 export function middleware(request: NextRequest) {
-    // Ambil token dari cookies
+    // Handle preflight requests
+    if (request.method === 'OPTIONS') {
+        return NextResponse.next();
+    }
+
     const token = request.cookies.get('refreshToken')?.value;
 
-    // Jika tidak ada token, redirect ke login
     if (!token) {
         return NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/login`, request.url));
     }
 
-    // Verifikasi token (tambahkan logika verifikasi jwt di sini)
     try {
-        // Contoh verifikasi sederhana (Anda perlu implementasi yang lebih kompleks)
-
         const decoded: Decoded = jwtDecode(token);
 
-        console.log(decoded);
-        // Cek apakah token sudah expired
-        if (decoded.exp && decoded.exp < Date.now() / 1000) {
-            return NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/login`, request.url));
+        // Check token expiration with a small buffer
+        const currentTime = Math.floor(Date.now() / 1000);
+        if (decoded.exp && decoded.exp <= currentTime) {
+            // Clear the invalid cookie
+            const response = NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/login`, request.url));
+            response.cookies.delete('refreshToken');
+            return response;
         }
 
-        // if (decoded.role === 'MEMBER' || 'CUSTOMER') {
-        //     return NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/users/${decoded.email}`, request.url));
-        // }
+        // Add user info to headers for downstream use
+        const requestHeaders = new Headers(request.headers);
+        requestHeaders.set('x-user-role', decoded.role);
+        requestHeaders.set('x-user-email', decoded.email);
 
-        return NextResponse.next();
+        // Continue with the modified request
+        const response = NextResponse.next({
+            request: {
+                headers: requestHeaders,
+            },
+        });
+
+        return response;
     } catch (error) {
-        // Token tidak valid
-        return NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/login`, request.url));
+        // Handle invalid tokens by clearing them and redirecting
+        const response = NextResponse.redirect(new URL(`${process.env.NEXT_PUBLIC_HOME}/login`, request.url));
+        response.cookies.delete('refreshToken');
+        return response;
     }
 }
 
-// Konfigurasi matcher untuk middleware
 export const config = {
-    matcher: [
-        // Semua route yang ingin di-protect
-        '/((?!api|_next/static|_next/image|favicon.ico).*)',
-    ],
+    matcher: ['/((?!api|_next/static|_next/image|favicon.ico|login|public).*)'],
 };
