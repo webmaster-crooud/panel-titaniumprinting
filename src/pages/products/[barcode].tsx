@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { BACKEND } from '../../../lib/utils';
-import { IconArrowBack, IconLoader3 } from '@tabler/icons-react';
+import { IconArrowBack, IconEdit, IconLoader3 } from '@tabler/icons-react';
 import { Card } from '@/components/Card';
 import { DetailProductTable } from '../../components/Table/Detail.table';
 import { ComponentProductTable } from '../../components/Table/Component.table';
@@ -10,6 +10,8 @@ import CoverImageProduct from '../../components/Section/Cover.images';
 import ImageProduct from '../../components/Section';
 import { useAuthToken } from '../../../hooks/useAuthToken';
 import { fetchWithAuth } from '../../../lib/fetchWithAuth';
+import { useSetAtom } from 'jotai';
+import { alertShow } from '../../../store/Atom';
 
 export interface DetailProducts {
     name: string;
@@ -54,13 +56,24 @@ export interface DetailProducts {
         source: string | File;
     }[];
 }
+interface Components {
+    id: number | null;
+    name: string;
+    typeComponent: string;
+    flag: string;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+}
 
 export default function DetailProductPage() {
     const router = useRouter();
     const { barcode } = router.query;
     const [product, setProduct] = useState<DetailProducts | undefined>(undefined);
     const [loading, setLoading] = useState(false);
-
+    const [modal, setModal] = useState<string>('');
+    const [component, setComponent] = useState<Components[]>([]);
+    const [dataComponent, setDataComponent] = useState<string>('');
+    const setAlert = useSetAtom(alertShow);
     const { token, refreshToken } = useAuthToken();
     const fetchProduct = useCallback(async () => {
         setLoading(true);
@@ -79,6 +92,22 @@ export default function DetailProductPage() {
         fetchProduct();
     }, [fetchProduct]);
 
+    const fetchComponents = useCallback(async () => {
+        try {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/components`);
+            const result = await response.json();
+            if (result.error) {
+                setAlert({ type: 'warning', message: result.message });
+            } else {
+                setComponent(result.data);
+            }
+        } catch (error) {
+            setAlert({ type: 'error', message: `${error}` });
+        }
+    }, [refreshToken, setAlert, token]);
+    useEffect(() => {
+        fetchComponents();
+    }, [fetchComponents]);
     return (
         <section className="relative py-8">
             {loading ? (
@@ -91,11 +120,19 @@ export default function DetailProductPage() {
                 <>
                     <div className="flex items-center justify-between mb-6">
                         <h1 className="font-semibold text-xl">{product?.name}</h1>
-                        <Link href={'/products'} className="px-4 py-2 text-sm rounded-lg bg-red-500 text-slate-100 font-semibold">
-                            <div className="flex items-center justify-center gap-1">
+                        <div className="flex items-center justify-end gap-5">
+                            <Link
+                                href={'/products'}
+                                className="px-4 py-2 text-sm rounded-lg bg-red-500 text-slate-100 font-semibold flex items-center justify-center gap-1"
+                            >
                                 <IconArrowBack size={18} stroke={2} /> <span>Kembali</span>
-                            </div>
-                        </Link>
+                            </Link>
+                            <button className="px-4 py-2 text-sm rounded-lg bg-blue-500 text-slate-100 font-semibold">
+                                <div className="flex items-center justify-center gap-1">
+                                    <IconEdit size={18} stroke={2} /> <span>Edit</span>
+                                </div>
+                            </button>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-3 gap-5">
@@ -111,8 +148,32 @@ export default function DetailProductPage() {
                         <ImageProduct barcode={`${barcode}`} fetchProduct={fetchProduct} product={product} />
                     </div>
                     <div className="grid grid-cols-4 mt-8 gap-5">
+                        <button onClick={() => setModal('component')} className="px-5 py-2 rounded-lg font-semibold bg-blue-500 text-white">
+                            Add Component
+                        </button>
                         <ComponentProductTable product={product} barcode={`${barcode}`} />
                     </div>
+
+                    {modal === 'component' && (
+                        <div className="absolute top-1/2 left-0 right-0 w-6/12">
+                            <div className="bg-slate-100 p-5 rounded-lg shadow-lg">
+                                <h1>Tambah Komponent</h1>
+                                <form>
+                                    <select
+                                        value={dataComponent}
+                                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setDataComponent(e.target.value)}
+                                    >
+                                        {component.map((data, i) => (
+                                            <option value={data.id || ''} key={i}>
+                                                {data.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <button>Save</button>
+                                </form>
+                            </div>
+                        </div>
+                    )}
                 </>
             )}
         </section>
