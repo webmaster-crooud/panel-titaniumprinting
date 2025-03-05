@@ -167,7 +167,7 @@ export default function DetailProductPage() {
                                     <select
                                         value={dataComponent}
                                         onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setDataComponent(e.target.value)}
-                                        className="px-5 py-2 text-sm border border-white rounded-lg bg-transparent"
+                                        className="px-5 py-2 text-sm border w-full inline-block border-white rounded-lg bg-transparent"
                                     >
                                         {component.map((data, i) => (
                                             <option value={data.id || ''} key={i}>
@@ -175,7 +175,7 @@ export default function DetailProductPage() {
                                             </option>
                                         ))}
                                     </select>
-                                    <button className="px-3 py-2 text-sm font-medium bg-blue-500 text-white">Save</button>
+                                    <button className="px-5 rounded-lg py-2 text-sm font-medium bg-blue-500 text-white">Save</button>
                                 </form>
                             </div>
                         </div>
