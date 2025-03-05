@@ -108,6 +108,15 @@ export default function DetailProductPage() {
     useEffect(() => {
         fetchComponents();
     }, [fetchComponents]);
+
+    const addComponent = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/components/${barcode}/${dataComponent}`);
+            const result = await response.json();
+            setAlert({ type: 'success', message: result.message });
+        } catch (error) {}
+    };
     return (
         <section className="relative py-8">
             {loading ? (
@@ -163,7 +172,7 @@ export default function DetailProductPage() {
                                         <IconX />
                                     </button>
                                 </div>
-                                <form>
+                                <form onSubmit={addComponent}>
                                     <select
                                         value={dataComponent}
                                         onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setDataComponent(e.target.value)}
@@ -175,7 +184,9 @@ export default function DetailProductPage() {
                                             </option>
                                         ))}
                                     </select>
-                                    <button className="px-5 rounded-lg py-2 text-sm font-medium bg-blue-500 text-white">Save</button>
+                                    <button type="submit" className="px-5 rounded-lg py-2 text-sm font-medium bg-blue-500 text-white">
+                                        Save
+                                    </button>
                                 </form>
                             </div>
                         </div>
