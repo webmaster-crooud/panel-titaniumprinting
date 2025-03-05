@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { BACKEND } from '../../../lib/utils';
-import { IconArrowBack, IconEdit, IconLoader3 } from '@tabler/icons-react';
+import { IconArrowBack, IconEdit, IconLoader3, IconX } from '@tabler/icons-react';
 import { Card } from '@/components/Card';
 import { DetailProductTable } from '../../components/Table/Detail.table';
 import { ComponentProductTable } from '../../components/Table/Component.table';
@@ -155,13 +155,19 @@ export default function DetailProductPage() {
                     </div>
 
                     {modal === 'component' && (
-                        <div className="absolute top-1/2 left-0 right-0 w-6/12">
+                        <div className="absolute top-1/2 mx-auto z-50 left-0 right-0 w-6/12">
                             <div className="bg-slate-100 p-5 rounded-lg shadow-lg">
-                                <h1>Tambah Komponent</h1>
+                                <div className="flex items-center justify-between">
+                                    <h1>Tambah Komponent</h1>
+                                    <button onClick={() => setModal('')}>
+                                        <IconX />
+                                    </button>
+                                </div>
                                 <form>
                                     <select
                                         value={dataComponent}
                                         onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setDataComponent(e.target.value)}
+                                        className="px-5 py-2 text-sm border border-white rounded-lg bg-transparent"
                                     >
                                         {component.map((data, i) => (
                                             <option value={data.id || ''} key={i}>
@@ -169,7 +175,7 @@ export default function DetailProductPage() {
                                             </option>
                                         ))}
                                     </select>
-                                    <button>Save</button>
+                                    <button className="px-3 py-2 text-sm font-medium bg-blue-500 text-white">Save</button>
                                 </form>
                             </div>
                         </div>
