@@ -171,7 +171,7 @@ export default function DetailProductPage() {
                         <button onClick={() => setModal('component')} className="px-5 py-2 rounded-lg font-semibold bg-blue-500 text-white">
                             Add Component
                         </button>
-                        <ComponentProductTable product={product} barcode={`${barcode}`} />
+                        <ComponentProductTable fetching={fetchComponents} product={product} barcode={`${barcode}`} />
                     </div>
 
                     {modal === 'component' && (
