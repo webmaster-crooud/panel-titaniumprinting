@@ -73,6 +73,7 @@ export default function DetailProductPage() {
     const [modal, setModal] = useState<string>('');
     const [component, setComponent] = useState<Components[]>([]);
     const [dataComponent, setDataComponent] = useState<string>('');
+    const [minQty, setMinQty] = useState<number>(1);
     const setAlert = useSetAtom(alertShow);
     const { token, refreshToken } = useAuthToken();
     const fetchProduct = useCallback(async () => {
@@ -109,13 +110,22 @@ export default function DetailProductPage() {
         fetchComponents();
     }, [fetchComponents]);
 
+    const dataAddComponent = {
+        componentId: dataComponent,
+        minQty: minQty,
+    };
     const addComponent = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/components/${barcode}/${dataComponent}`);
+            const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/components/${barcode}`, {
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataAddComponent),
+            });
             const result = await response.json();
             setAlert({ type: 'success', message: result.message });
-        } catch (error) {}
+        } catch (error) {
+            setAlert({ type: 'error', message: `${error}` });
+        }
     };
     return (
         <section className="relative py-8">
@@ -173,17 +183,28 @@ export default function DetailProductPage() {
                                     </button>
                                 </div>
                                 <form onSubmit={addComponent}>
-                                    <select
-                                        value={dataComponent}
-                                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setDataComponent(e.target.value)}
-                                        className="px-5 py-2 text-sm border w-full inline-block border-white rounded-lg bg-transparent"
-                                    >
-                                        {component.map((data, i) => (
-                                            <option value={data.id || ''} key={i}>
-                                                {data.name}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <div className="flex items-center justify-center gap-5 flex-wrap">
+                                        <select
+                                            value={dataComponent}
+                                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setDataComponent(e.target.value)}
+                                            className="px-5 py-2 text-sm border w-full inline-block border-blue-400 rounded-lg bg-transparent"
+                                        >
+                                            {component.map((data, i) => (
+                                                <option value={data.id || ''} key={i}>
+                                                    {data.name}
+                                                </option>
+                                            ))}
+                                        </select>
+
+                                        <input
+                                            type="number"
+                                            className="px-5 py-2 text-sm border w-full inline-block border-blue-400 rounded-lg bg-transparent"
+                                            value={minQty}
+                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMinQty(Number(e.target.value))}
+                                            placeholder="Lembar, box ..."
+                                            name="minQty"
+                                        />
+                                    </div>
                                     <button type="submit" className="px-5 rounded-lg py-2 text-sm font-medium bg-blue-500 text-white">
                                         Save
                                     </button>
