@@ -118,6 +118,7 @@ export default function DetailProductPage() {
         e.preventDefault();
         try {
             const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products/components/${barcode}`, {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dataAddComponent),
             });
@@ -176,14 +177,14 @@ export default function DetailProductPage() {
                     {modal === 'component' && (
                         <div className="absolute top-1/2 mx-auto z-50 left-0 right-0 w-6/12">
                             <div className="bg-slate-100 p-5 rounded-lg shadow-lg">
-                                <div className="flex items-center justify-between">
+                                <div className="flex items-center justify-between mb-5">
                                     <h1>Tambah Komponent</h1>
                                     <button onClick={() => setModal('')}>
                                         <IconX />
                                     </button>
                                 </div>
                                 <form onSubmit={addComponent}>
-                                    <div className="flex items-center justify-center gap-5 flex-wrap">
+                                    <div className="flex items-center justify-center gap-5">
                                         <select
                                             value={dataComponent}
                                             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setDataComponent(e.target.value)}
@@ -205,7 +206,7 @@ export default function DetailProductPage() {
                                             name="minQty"
                                         />
                                     </div>
-                                    <button type="submit" className="px-5 rounded-lg py-2 text-sm font-medium bg-blue-500 text-white">
+                                    <button type="submit" className="px-5 mt-5 rounded-lg py-2 text-sm font-medium bg-blue-500 text-white">
                                         Save
                                     </button>
                                 </form>
