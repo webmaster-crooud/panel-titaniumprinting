@@ -317,9 +317,6 @@ export default function CreateProductPage() {
                 await new Promise((resolve) => setTimeout(resolve, 2000));
                 const response = await fetchWithAuth(token, refreshToken, `${BACKEND}/products`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'multipart/form-data', // Set content type
-                    },
                     body: formData,
                 });
                 const result = await response.json();
